@@ -1,11 +1,11 @@
 import React from "react";
-import { Typography, Card, Collapse } from 'antd';
-const {Panel} = Collapse
+import { Collapse } from 'antd';
+const { Panel } = Collapse
 
 
 const FaqCard = () => {
-    return(
-        <Collapse style={{width: 400, marginTop: -200}} >
+    return (
+        <Collapse style={{ width: 400, marginTop: -200 }} >
             <Panel header="What is StreamVerse?" key="1">
                 <p>StreamVerse is an app that allow you to keep your viewers updated on the latest news!</p>
             </Panel>
