@@ -1,4 +1,4 @@
-import {createButton} from "react-social-login-buttons";
+import { createButton } from "react-social-login-buttons";
 
 
 const config = {
