@@ -5,6 +5,7 @@ import { AuthContext } from './context/AuthContextProvider';
 import Faq from './pages/Faq';
 import Home from './pages/Home';
 import Register from './pages/Register';
+import Profile from './pages/Profile';
 
 const App = () => {
 
@@ -15,12 +16,14 @@ const App = () => {
     <Routes>
       {userSession ? <>
         <Route path="*" element={<Navigate to="/home" />}  />
+        <Route path="/register" element={<Register />} />
         <Route path="/home" element={<Home />} />
+        <Route path="/profile" element={<Profile />} />
       </> :
 
         <>
-          <Route path="*" element={<Navigate to="/" />}  />
-          <Route path="/" element={<Register />} />
+          <Route path="*" element={<Navigate to="/register" />}  />
+          <Route path="/register" element={<Register />} />
           <Route path="/faq" element={<Faq />} />
         </>}
 
