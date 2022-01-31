@@ -8,18 +8,19 @@ const FollowedLiveCard = (props) => {
         <div
             id="scrollableDiv"
             style={{
-                height: "86vh",
-                overflow: 'auto',
+                height: "95%",
+                overflow: 'auto'
             }}
         >
             <InfiniteScroll
                 dataLength={props.liveChannels.length}
                 next={props.loadMoreData}
-                hasMore={props.liveChannels.length < 20}
+                hasMore={props.liveChannels.length > 50}
                 loader={<Skeleton avatar paragraph={{ rows: 1 }} active />}
-                endMessage={<Divider plain>It is all, nothing more</Divider>}
+                endMessage={<Divider plain><h1>End of Live Channels that you followed</h1></Divider>}
                 scrollableTarget="scrollableDiv"
             >
+
                 <List
                     dataSource={props.liveChannels}
                     renderItem={item => (
@@ -32,6 +33,7 @@ const FollowedLiveCard = (props) => {
                                 />
                                 <div>Viewers {item.viewer_count}</div>
                             </List.Item>
+                            <Divider />
                         </a>
                     )}
                 />
