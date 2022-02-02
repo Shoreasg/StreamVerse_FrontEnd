@@ -2,7 +2,7 @@ import { List, Card, Skeleton, Divider } from "antd";
 import React from "react";
 import InfiniteScroll from 'react-infinite-scroll-component';
 const { Meta } = Card;
-const UserClipsCard = (props) => {
+const UserClipsCard = ({Clips,loadMoreClipsData}) => {
     return (
         <div
             id="scrollableDiv"
@@ -12,15 +12,15 @@ const UserClipsCard = (props) => {
             }}
         >
             <InfiniteScroll
-                dataLength={props.Clips.length}
-                next={props.loadMoreClipsData}
-                hasMore={props.Clips.length > 50}
+                dataLength={Clips.length}
+                next={loadMoreClipsData}
+                hasMore={Clips.length > 50}
                 loader={<Skeleton avatar paragraph={{ rows: 1 }} active />}
                 endMessage={<Divider plain><h1>End of your Clips</h1></Divider>}
                 scrollableTarget="scrollableDiv"
             >
                 <List
-                    dataSource={props.Clips}
+                    dataSource={Clips}
                     renderItem={item => (
                         <a href={item.url}>
                             <List.Item key={item.id}>

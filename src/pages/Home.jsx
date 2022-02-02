@@ -1,27 +1,39 @@
 import React, { useEffect, useState } from "react";
-import { Layout, Row, Input, Divider } from 'antd';
+import { Layout, Row, Divider } from 'antd';
 import PageHeader from "../components/PageHeader";
 import PageFooter from "../components/PageFooter";
 import axios from "axios";
 import FollowedLiveCard from "../components/FollowedLiveCard";
 import UserVideoCard from "../components/UserVideoCard";
 import UserClipsCard from "../components/UserClipsCard";
+import PostStatus from "../components/PostStatus";
+import NewsFeed from "../components/NewsFeed";
 const { Content, Sider } = Layout;
-const { TextArea } = Input;
 
 
-const Home = () => {
+const Home = ({ userName, TwitchId }) => {
     const [FollowedLoading, setFollowedLoading] = useState(false);
     const [VideoLoading, setVideoLoading] = useState(false);
     const [ClipsLoading, setClipsLoading] = useState(false);
     const [GetLiveChannels, setGetLiveChannels] = useState([]);
     const [GetVideo, setGetVideo] = useState([]);
     const [GetClips, setGetClips] = useState([]);
+    const [Feed, setFeed] = useState([]);
+
+    const getFeed= () =>
+    {
+        axios.get(`${process.env.REACT_APP_DEV_BACKEND_URL}/GetFeed`, { withCredentials: true })
+            .then((res) => {
+                console.log(res.data)
+                setFeed(res.data)
+            })
+    }
 
 
     const getFollowedChannels = () => {
         axios.get(`${process.env.REACT_APP_DEV_BACKEND_URL}/GetFollowedChannels`, { withCredentials: true })
             .then((res) => {
+                console.log(res.data)
                 setGetLiveChannels([...res.data.data])
                 setFollowedLoading(false);
             }).catch(() => {
@@ -77,9 +89,10 @@ const Home = () => {
         loadMoreData()
         loadMoreVideoData()
         loadMoreClipsData()
+        getFeed()
     }, []);
 
-    console.log(GetClips)
+    console.log(Feed)
 
     return (
         <Layout style={{ height: "100vh" }}>
@@ -92,10 +105,10 @@ const Home = () => {
                 <Content>
                     <Divider />
                     <Row justify="center" align="middle" >
-                        <TextArea showCount autoSize={{ minRows: 5, maxRows: 8 }} style={{ width: "50%" }} placeholder="What's up!" />
+                        <PostStatus userName={userName} TwitchId={TwitchId} />
                     </Row>
                     <Divider />
-                    newsfeed
+                    <NewsFeed Feed={Feed}/>
                 </Content>
                 <Sider width={"20%"}>
                     <h1 style={{ textAlign: "center" }}>Your Highlights</h1>

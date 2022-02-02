@@ -3,7 +3,7 @@ import React from "react";
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 
-const FollowedLiveCard = (props) => {
+const FollowedLiveCard = ({liveChannels,loadMoreData}) => {
     return (
         <div
             id="scrollableDiv"
@@ -13,16 +13,16 @@ const FollowedLiveCard = (props) => {
             }}
         >
             <InfiniteScroll
-                dataLength={props.liveChannels.length}
-                next={props.loadMoreData}
-                hasMore={props.liveChannels.length > 50}
+                dataLength={liveChannels.length}
+                next={loadMoreData}
+                hasMore={liveChannels.length > 50}
                 loader={<Skeleton avatar paragraph={{ rows: 1 }} active />}
                 endMessage={<Divider plain><h1>End of Live Channels that you followed</h1></Divider>}
                 scrollableTarget="scrollableDiv"
             >
 
                 <List
-                    dataSource={props.liveChannels}
+                    dataSource={liveChannels}
                     renderItem={item => (
                         <a href={`https://www.twitch.tv/${item.user_login}`}>
                             <List.Item key={item.id}>
