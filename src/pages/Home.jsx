@@ -19,12 +19,13 @@ const Home = ({ userName, TwitchId }) => {
     const [GetVideo, setGetVideo] = useState([]);
     const [GetClips, setGetClips] = useState([]);
     const [Feed, setFeed] = useState([]);
+    const [newPost, setnewPost] = useState([]);
+
 
     const getFeed= () =>
     {
         axios.get(`${process.env.REACT_APP_DEV_BACKEND_URL}/GetFeed`, { withCredentials: true })
             .then((res) => {
-                console.log(res.data)
                 setFeed(res.data)
             })
     }
@@ -33,7 +34,6 @@ const Home = ({ userName, TwitchId }) => {
     const getFollowedChannels = () => {
         axios.get(`${process.env.REACT_APP_DEV_BACKEND_URL}/GetFollowedChannels`, { withCredentials: true })
             .then((res) => {
-                console.log(res.data)
                 setGetLiveChannels([...res.data.data])
                 setFollowedLoading(false);
             }).catch(() => {
@@ -90,9 +90,7 @@ const Home = ({ userName, TwitchId }) => {
         loadMoreVideoData()
         loadMoreClipsData()
         getFeed()
-    }, []);
-
-    console.log(Feed)
+    }, [newPost]);
 
     return (
         <Layout style={{ height: "100vh" }}>
@@ -105,10 +103,10 @@ const Home = ({ userName, TwitchId }) => {
                 <Content>
                     <Divider />
                     <Row justify="center" align="middle" >
-                        <PostStatus userName={userName} TwitchId={TwitchId} />
+                        <PostStatus userName={userName} TwitchId={TwitchId} setnewPost={setnewPost} Feed={Feed}/>
                     </Row>
                     <Divider />
-                    <NewsFeed Feed={Feed}/>
+                    <NewsFeed Feed={Feed} />
                 </Content>
                 <Sider width={"20%"}>
                     <h1 style={{ textAlign: "center" }}>Your Highlights</h1>

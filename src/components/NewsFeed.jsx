@@ -6,10 +6,9 @@ import { Card } from 'antd';
 
 const NewsFeed = ({ Feed }) => {
 
+    const LatestFeed= Feed.reverse();
 
-
-    const MapFeed = Feed.map((data, index) => {
-        console.log(data.status)
+    const MapFeed = LatestFeed.map((data) => {
         return (<Card style={{ width: 300 }}>
             <p>{data.status}</p>
         </Card>)

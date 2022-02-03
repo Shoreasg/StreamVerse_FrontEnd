@@ -3,7 +3,7 @@ import axios from "axios";
 
 export const AuthContext = createContext({});
 const AuthContextProvider = (props) => {
-	const [userSession, setUserSession] = useState({})
+	const [userSession, setUserSession] = useState()
 
 	useEffect(() => {
 		axios

@@ -6,7 +6,7 @@ const { TextArea } = Input;
 
 
 
-const PostStatus = ({userName, TwitchId}) => {
+const PostStatus = ({userName, TwitchId, setnewPost, Feed}) => {
     const [form] = Form.useForm();
 
     const onPostStatus = (data) => {
@@ -24,6 +24,7 @@ const PostStatus = ({userName, TwitchId}) => {
                     draggable: true,
                     progress: undefined,
                     });
+                    setnewPost([...Feed,data])    
             }
         })
         .catch((err)=>
