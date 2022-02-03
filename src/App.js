@@ -20,7 +20,7 @@ const App = () => {
       {userSession ?
         <>
           <Route path="*" element={<Navigate to="/home" />} />
-          <Route path="/home" element={<Home userName={userSession.userName} TwitchId={userSession.TwitchId}/>} />
+          <Route path="/home" element={<Home userName={userSession.userName} TwitchId={userSession.twitchId} profileImage={userSession.profileImage}/>} />
           <Route path="/profile" element={<Profile />} />
         </> :
         <>

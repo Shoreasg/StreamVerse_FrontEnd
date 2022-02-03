@@ -11,22 +11,18 @@ import NewsFeed from "../components/NewsFeed";
 const { Content, Sider } = Layout;
 
 
-const Home = ({ userName, TwitchId }) => {
-    const [FollowedLoading, setFollowedLoading] = useState(false);
-    const [VideoLoading, setVideoLoading] = useState(false);
-    const [ClipsLoading, setClipsLoading] = useState(false);
+const Home = ({ userName, TwitchId, profileImage }) => {
     const [GetLiveChannels, setGetLiveChannels] = useState([]);
     const [GetVideo, setGetVideo] = useState([]);
     const [GetClips, setGetClips] = useState([]);
     const [Feed, setFeed] = useState([]);
-    const [newPost, setnewPost] = useState([]);
+    const [newPost, setnewPost] = useState();
 
 
-    const getFeed= () =>
-    {
+    const getFeed = () => {
         axios.get(`${process.env.REACT_APP_DEV_BACKEND_URL}/GetFeed`, { withCredentials: true })
             .then((res) => {
-                setFeed(res.data)
+                setFeed(res.data.reverse())
             })
     }
 
@@ -35,9 +31,6 @@ const Home = ({ userName, TwitchId }) => {
         axios.get(`${process.env.REACT_APP_DEV_BACKEND_URL}/GetFollowedChannels`, { withCredentials: true })
             .then((res) => {
                 setGetLiveChannels([...res.data.data])
-                setFollowedLoading(false);
-            }).catch(() => {
-                setFollowedLoading(false);
             })
     }
 
@@ -45,9 +38,6 @@ const Home = ({ userName, TwitchId }) => {
         axios.get(`${process.env.REACT_APP_DEV_BACKEND_URL}/GetUserVideos`, { withCredentials: true })
             .then((res) => {
                 setGetVideo([...res.data.data])
-                setVideoLoading(false);
-            }).catch(() => {
-                setVideoLoading(false);
             })
     }
 
@@ -55,66 +45,39 @@ const Home = ({ userName, TwitchId }) => {
         axios.get(`${process.env.REACT_APP_DEV_BACKEND_URL}/GetUserClips`, { withCredentials: true })
             .then((res) => {
                 setGetClips([...res.data.data])
-                setClipsLoading(false);
-            }).catch(() => {
-                setClipsLoading(false);
             })
     }
 
-    const loadMoreData = () => {
-        if (FollowedLoading) {
-            return;
-        }
-        setFollowedLoading(true);
-        getFollowedChannels()
-    }
-
-    const loadMoreVideoData = () => {
-        if (VideoLoading) {
-            return;
-        }
-        setVideoLoading(true);
-        getUserVideos()
-    }
-
-    const loadMoreClipsData = () => {
-        if (ClipsLoading) {
-            return;
-        }
-        setClipsLoading(true);
-        getUserClips()
-    }
 
     useEffect(() => {
-        loadMoreData()
-        loadMoreVideoData()
-        loadMoreClipsData()
+        getFollowedChannels()
+        getUserVideos()
+        getUserClips()
         getFeed()
     }, [newPost]);
 
     return (
-        <Layout style={{ height: "100vh" }}>
+        <Layout style={{ height: "1000px" }}>
             <PageHeader />
             <Layout>
                 <Sider width={"20%"}>
                     <h1 style={{ textAlign: "center" }}>Live Channels that you Followed</h1>
-                    <FollowedLiveCard liveChannels={GetLiveChannels} loadMoreData={loadMoreData} />
+                    <FollowedLiveCard liveChannels={GetLiveChannels} />
                 </Sider>
                 <Content>
                     <Divider />
                     <Row justify="center" align="middle" >
-                        <PostStatus userName={userName} TwitchId={TwitchId} setnewPost={setnewPost} Feed={Feed}/>
+                        <PostStatus userName={userName} TwitchId={TwitchId} profileImage={profileImage} setnewPost={setnewPost} />
                     </Row>
                     <Divider />
                     <NewsFeed Feed={Feed} />
                 </Content>
                 <Sider width={"20%"}>
                     <h1 style={{ textAlign: "center" }}>Your Highlights</h1>
-                    <UserVideoCard Videos={GetVideo} loadMoreVideoData={loadMoreVideoData} />
+                    <UserVideoCard Videos={GetVideo} />
                     <Divider />
                     <h1 style={{ textAlign: "center" }}>Your Clips</h1>
-                    <UserClipsCard Clips={GetClips} loadMoreClipsData={loadMoreClipsData} />
-
+                    <UserClipsCard Clips={GetClips} />
                 </Sider>
             </Layout>
             <PageFooter />
