@@ -26,6 +26,20 @@ const Home = ({ userName, TwitchId, profileImage }) => {
             })
     }
 
+    const getFollowers = () => {
+        axios.get(`${process.env.REACT_APP_DEV_BACKEND_URL}/GetFollowers`, { withCredentials: true })
+            .then((res) => {
+               console.log(res.data)
+            })
+    }
+
+    const getUserFollowing = () => {
+        axios.get(`${process.env.REACT_APP_DEV_BACKEND_URL}/GetFollowing`, { withCredentials: true })
+            .then((res) => {
+               console.log(res.data)
+            })
+    }
+
 
     const getFollowedChannels = () => {
         axios.get(`${process.env.REACT_APP_DEV_BACKEND_URL}/GetFollowedChannels`, { withCredentials: true })
@@ -54,6 +68,8 @@ const Home = ({ userName, TwitchId, profileImage }) => {
         getUserVideos()
         getUserClips()
         getFeed()
+        getFollowers()
+        getUserFollowing()
     }, [newPost]);
 
     return (
