@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Layout, Row, Divider } from 'antd';
+import { Layout, Row, Divider, Spin } from 'antd';
 import PageHeader from "../components/PageHeader";
 import PageFooter from "../components/PageFooter";
 import axios from "axios";
@@ -16,13 +16,17 @@ const Home = ({ userName, TwitchId, profileImage }) => {
     const [GetVideo, setGetVideo] = useState([]);
     const [GetClips, setGetClips] = useState([]);
     const [Feed, setFeed] = useState([]);
-    const [newPost, setnewPost] = useState();
+    const [UpdatedFeed, setUpdatedFeed] = useState(false);
+    const [Loading, setLoading] = useState(true);
 
 
-    const getFeed = () => {
-        axios.get(`${process.env.REACT_APP_DEV_BACKEND_URL}/GetFeed`, { withCredentials: true })
+
+    const getFeed = async () => {
+        
+       await axios.get(`${process.env.REACT_APP_DEV_BACKEND_URL}/GetFeed`, { withCredentials: true })
             .then((res) => {
                 setFeed(res.data)
+                setLoading(false)
             })
     }
 
@@ -54,8 +58,9 @@ const Home = ({ userName, TwitchId, profileImage }) => {
         getUserVideos()
         getUserClips()
         getFeed()
-        // getFollowers()
-    }, [newPost]);
+        setUpdatedFeed(false)
+        setLoading(true)
+    }, [UpdatedFeed]);
 
     return (
         <Layout style={{ height: "1000px" }}>
@@ -68,10 +73,11 @@ const Home = ({ userName, TwitchId, profileImage }) => {
                 <Content>
                     <Divider />
                     <Row justify="center" align="middle" >
-                        <PostStatus userName={userName} TwitchId={TwitchId} profileImage={profileImage} setnewPost={setnewPost} />
+                        <PostStatus userName={userName} TwitchId={TwitchId} profileImage={profileImage} setUpdatedFeed={setUpdatedFeed} />
                     </Row>
                     <Divider />
-                    <NewsFeed Feed={Feed} />
+                    {Loading?<Spin size="large" style={{width: 1200}}/>: <NewsFeed Feed={Feed} setUpdatedFeed={setUpdatedFeed} TwitchId={TwitchId}/>}
+                  
                 </Content>
                 <Sider width={"20%"}>
                     <h1 style={{ textAlign: "center" }}>Your Latest Highlights</h1>

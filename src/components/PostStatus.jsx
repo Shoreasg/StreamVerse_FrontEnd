@@ -1,13 +1,13 @@
 import React from "react";
 import { toast } from 'react-toastify';
-import { Button, Input, Form, Card, Comment,Avatar } from 'antd';
+import { Button, Input, Form, Card, Comment, Avatar } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import axios from "axios";
 const { TextArea } = Input;
 
 
 
-const PostStatus = ({ userName, TwitchId, setnewPost, profileImage }) => {
+const PostStatus = ({ userName, TwitchId, setUpdatedFeed, profileImage }) => {
     const [form] = Form.useForm();
 
     const onPostStatus = (data) => {
@@ -23,12 +23,12 @@ const PostStatus = ({ userName, TwitchId, setnewPost, profileImage }) => {
                     draggable: true,
                     progress: undefined,
                 });
-                setnewPost(data)
+                setUpdatedFeed(true)
             }
         })
             .catch((err) => {
                 if (err) {
-                    toast(err.response.data.message, {
+                    toast.error(err.response.data.message, {
                         position: "top-right",
                         autoClose: 5000,
                         hideProgressBar: false,
@@ -53,17 +53,17 @@ const PostStatus = ({ userName, TwitchId, setnewPost, profileImage }) => {
                         <DeleteOutlined key="delete" />,
                     ]}
                 >
-                <Comment
-                    avatar={<Avatar src={profileImage} alt={userName} />}
-                    content={
-                        <TextArea
+                    <Comment
+                        avatar={<Avatar src={profileImage} alt={userName} />}
+                        content={
+                            <TextArea
 
-                            showCount
-                            autoSize={{ minRows: 5, maxRows: 6 }}
-                            maxLength={280}
-                            placeholder="What's up!"
-                            bordered={false} />
-                    } />
+                                showCount
+                                autoSize={{ minRows: 5, maxRows: 6 }}
+                                maxLength={280}
+                                placeholder="What's up!"
+                                bordered={false} />
+                        } />
 
 
                 </Card>
