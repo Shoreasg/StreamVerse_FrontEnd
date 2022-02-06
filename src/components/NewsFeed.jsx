@@ -1,21 +1,19 @@
 import React from "react";
-import { Card, Avatar, List } from 'antd';
+import { Card, Avatar, List,Comment, Tooltip } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import VirtualList from 'rc-virtual-list';
 import Linkify from 'linkify-react';
-
-const { Meta } = Card;
-
+import moment from 'moment';
 
 
 const NewsFeed = ({ Feed }) => {
     console.log(Feed)
     return (
-        <List style={{ left: 150, width: 800 }}>
+        <List style={{ left: 180, width: 800 }}>
             <VirtualList
                 data={Feed}
-                height={450}
-                itemHeight={100}
+                height={400}
+                itemHeight={300}
                 itemKey="id"
             >
                 {item => (
@@ -26,12 +24,19 @@ const NewsFeed = ({ Feed }) => {
                                 <DeleteOutlined key="delete" />,
                             ]}
                         >
-                            <Meta
-                                avatar={<Avatar src={item.profileImage}/>}
-                                title={item.userName}
-                                
-                            />
-                          <Linkify options={{target:'_blank'}}><br/>{item.status}</Linkify>
+                             <Comment 
+                         author={item.userName}
+                         avatar={<Avatar src={item.profileImage}/>}
+                         content={
+                            <p>
+                             <Linkify options={{target:'_blank'}}><br/>{item.status}</Linkify>
+                            </p>
+                          }
+                          datetime={
+                            <Tooltip title={moment(item.createdAt).format('MMMM Do YYYY, h:mm:ss a')}>
+                              <span>{moment(item.createdAt).startOf().fromNow()}</span>
+                            </Tooltip>
+                          }/>
                         </Card>
                     </List.Item>
                 )}

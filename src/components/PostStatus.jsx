@@ -1,6 +1,6 @@
 import React from "react";
 import { toast } from 'react-toastify';
-import { Button, Input, Form, Card } from 'antd';
+import { Button, Input, Form, Card, Comment,Avatar } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import axios from "axios";
 const { TextArea } = Input;
@@ -46,20 +46,25 @@ const PostStatus = ({ userName, TwitchId, setnewPost, profileImage }) => {
         <Form onFinish={onPostStatus} form={form} autoComplete="off" style={{ width: "50%" }}>
             <Form.Item
                 name="status"
-                rules={[{ required: true , message: "Status cannot be empty"}]}>
+                rules={[{ required: true, message: "Status cannot be empty" }]}>
                 <Card
                     actions={[
                         <EditOutlined key="edit" />,
                         <DeleteOutlined key="delete" />,
                     ]}
                 >
-                    <TextArea
+                <Comment
+                    avatar={<Avatar src={profileImage} alt={userName} />}
+                    content={
+                        <TextArea
 
-                        showCount
-                        autoSize={{ minRows: 5, maxRows: 8 }}
-                        maxLength={280}
-                        placeholder="What's up!" 
-                        bordered={false}/>
+                            showCount
+                            autoSize={{ minRows: 5, maxRows: 6 }}
+                            maxLength={280}
+                            placeholder="What's up!"
+                            bordered={false} />
+                    } />
+
 
                 </Card>
 

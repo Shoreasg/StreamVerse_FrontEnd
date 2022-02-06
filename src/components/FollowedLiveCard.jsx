@@ -1,4 +1,4 @@
-import { List, Avatar, Divider } from "antd";
+import { List, Avatar, Card } from "antd";
 import React from "react";
 import VirtualList from 'rc-virtual-list';
 
@@ -10,21 +10,22 @@ const FollowedLiveCard = ({ liveChannels }) => {
             <VirtualList
                 data={liveChannels}
                 height={810}
-                itemHeight={50}
+                itemHeight={10}
                 itemKey="id"
             >
                 {item => (
-                    <a href={`https://www.twitch.tv/${item.user_login}`}>
-                        <List.Item key={item.id}>
-                            <List.Item.Meta
-                                avatar={<Avatar src={item.thumbnail_url.replace('{width}', '70').replace('{height}', '70')} />}
-                                title={item.user_name}
-                                description={item.game_name}
-                            />
-                            <div>Viewers {item.viewer_count}</div>
-                        </List.Item>
-                        <Divider />
-                    </a>
+                    <Card>
+                        <a href={`https://www.twitch.tv/${item.user_login}`}>
+                            <List.Item key={item.id}>
+                                <List.Item.Meta
+                                    avatar={<Avatar src={item.thumbnail_url.replace('{width}', '70').replace('{height}', '70')} />}
+                                    title={item.user_name}
+                                    description={item.game_name}
+                                />
+                                <div>Viewers {item.viewer_count}</div>
+                            </List.Item>
+                        </a>
+                    </Card>
                 )}
             </VirtualList>
         </List>

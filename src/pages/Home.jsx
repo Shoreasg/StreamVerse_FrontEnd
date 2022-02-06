@@ -22,21 +22,7 @@ const Home = ({ userName, TwitchId, profileImage }) => {
     const getFeed = () => {
         axios.get(`${process.env.REACT_APP_DEV_BACKEND_URL}/GetFeed`, { withCredentials: true })
             .then((res) => {
-                setFeed(res.data.reverse())
-            })
-    }
-
-    const getFollowers = () => {
-        axios.get(`${process.env.REACT_APP_DEV_BACKEND_URL}/GetFollowers`, { withCredentials: true })
-            .then((res) => {
-               console.log(res.data)
-            })
-    }
-
-    const getUserFollowing = () => {
-        axios.get(`${process.env.REACT_APP_DEV_BACKEND_URL}/GetFollowing`, { withCredentials: true })
-            .then((res) => {
-               console.log(res.data)
+                setFeed(res.data)
             })
     }
 
@@ -68,8 +54,7 @@ const Home = ({ userName, TwitchId, profileImage }) => {
         getUserVideos()
         getUserClips()
         getFeed()
-        getFollowers()
-        getUserFollowing()
+        // getFollowers()
     }, [newPost]);
 
     return (
@@ -89,10 +74,10 @@ const Home = ({ userName, TwitchId, profileImage }) => {
                     <NewsFeed Feed={Feed} />
                 </Content>
                 <Sider width={"20%"}>
-                    <h1 style={{ textAlign: "center" }}>Your Highlights</h1>
+                    <h1 style={{ textAlign: "center" }}>Your Latest Highlights</h1>
                     <UserVideoCard Videos={GetVideo} />
                     <Divider />
-                    <h1 style={{ textAlign: "center" }}>Your Clips</h1>
+                    <h1 style={{ textAlign: "center" }}>Your Latest Clips</h1>
                     <UserClipsCard Clips={GetClips} />
                 </Sider>
             </Layout>
