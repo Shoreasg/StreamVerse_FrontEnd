@@ -1,29 +1,20 @@
-import { List, Avatar, Skeleton, Divider } from "antd";
+import { List, Avatar, Card } from "antd";
 import React from "react";
-import InfiniteScroll from 'react-infinite-scroll-component';
+import VirtualList from 'rc-virtual-list';
 
 
-const FollowedLiveCard = ({liveChannels,loadMoreData}) => {
+const FollowedLiveCard = ({ liveChannels }) => {
     return (
-        <div
-            id="scrollableDiv"
-            style={{
-                height: "95%",
-                overflow: 'auto'
-            }}
-        >
-            <InfiniteScroll
-                dataLength={liveChannels.length}
-                next={loadMoreData}
-                hasMore={liveChannels.length > 50}
-                loader={<Skeleton avatar paragraph={{ rows: 1 }} active />}
-                endMessage={<Divider plain><h1>End of Live Channels that you followed</h1></Divider>}
-                scrollableTarget="scrollableDiv"
-            >
 
-                <List
-                    dataSource={liveChannels}
-                    renderItem={item => (
+        <List>
+            <VirtualList
+                data={liveChannels}
+                height={810}
+                itemHeight={10}
+                itemKey="id"
+            >
+                {item => (
+                    <Card>
                         <a href={`https://www.twitch.tv/${item.user_login}`}>
                             <List.Item key={item.id}>
                                 <List.Item.Meta
@@ -33,13 +24,13 @@ const FollowedLiveCard = ({liveChannels,loadMoreData}) => {
                                 />
                                 <div>Viewers {item.viewer_count}</div>
                             </List.Item>
-                            <Divider />
                         </a>
-                    )}
-                />
-            </InfiniteScroll>
-        </div>
-    )
-}
+                    </Card>
+                )}
+            </VirtualList>
+        </List>
+    );
+};
+
 
 export default FollowedLiveCard
