@@ -1,7 +1,6 @@
 import React from "react";
 import { toast } from 'react-toastify';
 import { Button, Input, Form, Card, Comment, Avatar } from 'antd';
-import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import axios from "axios";
 const { TextArea } = Input;
 
@@ -43,14 +42,15 @@ const PostStatus = ({ userName, TwitchId, setUpdatedFeed, profileImage }) => {
     }
 
     return (
-        <Form onFinish={onPostStatus} form={form} autoComplete="off" style={{ width: "50%" }}>
+        <Form onFinish={onPostStatus} form={form} autoComplete="off" className="w-3/4">
             <Form.Item
                 name="status"
                 rules={[{ required: true, message: "Status cannot be empty" }]}>
                 <Card
                     actions={[
-                        <EditOutlined key="edit" />,
-                        <DeleteOutlined key="delete" />,
+                        <Button type="primary" htmlType="submit" block >
+                            Submit
+                        </Button>
                     ]}
                 >
                     <Comment
@@ -70,12 +70,10 @@ const PostStatus = ({ userName, TwitchId, setUpdatedFeed, profileImage }) => {
 
 
             </Form.Item>
-            <Form.Item >
-                <Button type="primary" htmlType="submit" style={{ left: "87%" }}>
-                    Submit
-                </Button>
-            </Form.Item>
 
+            <Form.Item >
+
+            </Form.Item>
         </Form>
 
     )

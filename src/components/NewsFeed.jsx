@@ -106,7 +106,7 @@ const NewsFeed = ({ Feed, setUpdatedFeed, TwitchId }) => {
             })
     }
     return (
-        <List style={{ left: 180, width: 800 }}>
+        <List className="w-3/4">
             <VirtualList
                 data={Feed}
                 height={400}
@@ -115,7 +115,8 @@ const NewsFeed = ({ Feed, setUpdatedFeed, TwitchId }) => {
             >
                 {item => (
                     <List.Item key={item._id}>
-                        <Card style={{ width: 800, textAlign: "left" }}
+                        <Card
+                            className="w-full"
                             actions={
                                 TwitchId === item.twitchId ?
                                     [
