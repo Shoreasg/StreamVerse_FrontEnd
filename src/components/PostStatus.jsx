@@ -6,7 +6,7 @@ const { TextArea } = Input;
 
 
 
-const PostStatus = ({ userName, TwitchId, setUpdatedFeed, profileImage }) => {
+const PostStatus = ({ userName, TwitchId, setUpdatedFeed, profileImage, Loading }) => {
     const [form] = Form.useForm();
 
     const onPostStatus = (data) => {
@@ -42,8 +42,32 @@ const PostStatus = ({ userName, TwitchId, setUpdatedFeed, profileImage }) => {
     }
 
     return (
+        
         <Form onFinish={onPostStatus} form={form} autoComplete="off" className="w-3/4">
-            <Form.Item
+            {Loading ? <Form.Item
+                name="status"
+                rules={[{ required: true, message: "Status cannot be empty" }]}>
+                <Card
+                    actions={[
+                        <Button type="primary" htmlType="submit" block disabled={true}>
+                            Submit
+                        </Button>
+                    ]}
+                >
+                    <Comment
+                        avatar={<Avatar src={profileImage} alt={userName} />}
+                        content={
+                            <TextArea
+
+                                showCount
+                                autoSize={{ minRows: 5, maxRows: 6 }}
+                                maxLength={280}
+                                placeholder="What's up!"
+                                bordered={false}
+                                disabled={true}/>
+                        } />
+                </Card>
+            </Form.Item>: <Form.Item
                 name="status"
                 rules={[{ required: true, message: "Status cannot be empty" }]}>
                 <Card
@@ -64,16 +88,8 @@ const PostStatus = ({ userName, TwitchId, setUpdatedFeed, profileImage }) => {
                                 placeholder="What's up!"
                                 bordered={false} />
                         } />
-
-
                 </Card>
-
-
-            </Form.Item>
-
-            <Form.Item >
-
-            </Form.Item>
+            </Form.Item>}
         </Form>
 
     )

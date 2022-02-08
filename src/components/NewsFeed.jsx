@@ -8,7 +8,7 @@ import moment from 'moment';
 import Swal from 'sweetalert2'
 import axios from "axios";
 
-const NewsFeed = ({ Feed, setUpdatedFeed, TwitchId }) => {
+const NewsFeed = ({ Feed, setUpdatedFeed, TwitchId, Loading }) => {
 
     const handleEdit = (e) => {
 
@@ -71,11 +71,11 @@ const NewsFeed = ({ Feed, setUpdatedFeed, TwitchId }) => {
                     confirmButtonColor: '#6441a5',
                     cancelButtonColor: '#d33',
                     confirmButtonText: 'Yes, delete it!'
-                  }).then(async (result) => {
+                }).then(async (result) => {
                     if (result.isConfirmed) {
                         console.log(result.value)
                         await axios.delete(`${process.env.REACT_APP_DEV_BACKEND_URL}/DeletePost/${res.data._id}`,
-                        { withCredentials: true }).then((res) => {
+                            { withCredentials: true }).then((res) => {
                                 toast.success(res.data, {
                                     position: "top-right",
                                     autoClose: 5000,
@@ -121,7 +121,7 @@ const NewsFeed = ({ Feed, setUpdatedFeed, TwitchId }) => {
                                 TwitchId === item.twitchId ?
                                     [
                                         <EditOutlined key="edit" onClick={handleEdit} id={item._id} />,
-                                        <DeleteOutlined key="delete" onClick={handleDelete} id={item._id}/>,
+                                        <DeleteOutlined key="delete" onClick={handleDelete} id={item._id} />,
                                     ] : ""}
                         >
                             <Comment

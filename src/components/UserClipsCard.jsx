@@ -16,6 +16,7 @@ const UserClipsCard = ({ Clips }) => {
                             <a href={item.url} target="_blank" rel="noreferrer">
                                 <Card
                                     cover={<img alt={item.title} src={item.thumbnail_url.replace('%{width}', '600').replace('%{height}', '600')} />}
+                                    hoverable={true}
                                 >
                                     <List.Item.Meta
                                         title={item.title}

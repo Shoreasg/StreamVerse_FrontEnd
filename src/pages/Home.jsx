@@ -66,16 +66,16 @@ const Home = ({ userName, TwitchId, profileImage }) => {
         <Layout className="w-screen">
             <PageHeader />
             <Layout >
-                <Sider width={"15vw"}>
+                <Sider width={"20%"}>
                     <h1 style={{ textAlign: "center" }}>Live Channels that you Followed</h1>
                     <FollowedLiveCard liveChannels={GetLiveChannels}  />
                 </Sider>
                 <Content className="flex flex-col items-center pt-10">
-                {Loading ? <Spin size="large" /> :<PostStatus userName={userName} TwitchId={TwitchId} profileImage={profileImage} setUpdatedFeed={setUpdatedFeed} />}
+               <PostStatus userName={userName} TwitchId={TwitchId} profileImage={profileImage} setUpdatedFeed={setUpdatedFeed} Loading={Loading}/>
                     <h1>News Feed</h1>
-                    {Loading ? <Spin size="large" /> : <NewsFeed Feed={Feed} setUpdatedFeed={setUpdatedFeed} TwitchId={TwitchId} />}
+                    {Loading ? <Spin size="large" tip={"Loading..."}/> : <NewsFeed Feed={Feed} setUpdatedFeed={setUpdatedFeed} TwitchId={TwitchId} />}
                 </Content>
-                <Sider width={"20vw"}>
+                <Sider width={"20%"}>
                     <h1 style={{ textAlign: "center" }}>Your Latest Highlights</h1>
                     <UserVideoCard Videos={GetVideo} />
                     <Divider />

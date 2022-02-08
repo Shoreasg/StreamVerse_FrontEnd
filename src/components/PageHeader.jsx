@@ -21,16 +21,16 @@ const PageHeader = () => {
     return (
         <Header>
             <div className="flex flex-row">
-                <div className="pr-4">
+                <div className="relative right-4">
                     <Button type="link" onClick={() => navigate("/home")}>Home</Button></div>
-                <div className="pr-4">
+                    <div className="relative right-4">
                     <Button type="link" onClick={() => navigate("/profile")}>Profile</Button>
                 </div>
             
-                <div className="flex items-center mx-auto pr-10">
-                    <Search placeholder="input search text" enterButton size="large" />
+                <div className="flex items-center mx-auto">
+                    <Search placeholder="input search text" enterButton size="large" className="relative right-3"/>
                 </div>
-                <div>
+                <div className="relative left-6">
                     <Button type="link" onClick={handleLogOut}>Logout</Button>
                 </div>
             </div>
