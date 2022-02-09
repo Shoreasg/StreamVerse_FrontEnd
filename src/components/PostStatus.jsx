@@ -42,7 +42,7 @@ const PostStatus = ({ userName, TwitchId, setUpdatedFeed, profileImage, Loading 
     }
 
     return (
-        
+
         <Form onFinish={onPostStatus} form={form} autoComplete="off" className="w-3/4">
             {Loading ? <Form.Item
                 name="status"
@@ -60,14 +60,14 @@ const PostStatus = ({ userName, TwitchId, setUpdatedFeed, profileImage, Loading 
                             <TextArea
 
                                 showCount
-                                autoSize={{ minRows: 5, maxRows: 6 }}
+                                autoSize={{ minRows: 3, maxRows: 4 }}
                                 maxLength={280}
                                 placeholder="What's up!"
                                 bordered={false}
-                                disabled={true}/>
+                                disabled={true} />
                         } />
                 </Card>
-            </Form.Item>: <Form.Item
+            </Form.Item> : <Form.Item
                 name="status"
                 rules={[{ required: true, message: "Status cannot be empty" }]}>
                 <Card
@@ -83,7 +83,7 @@ const PostStatus = ({ userName, TwitchId, setUpdatedFeed, profileImage, Loading 
                             <TextArea
 
                                 showCount
-                                autoSize={{ minRows: 5, maxRows: 6 }}
+                                autoSize={{ minRows: 3, maxRows: 4 }}
                                 maxLength={280}
                                 placeholder="What's up!"
                                 bordered={false} />

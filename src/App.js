@@ -16,20 +16,24 @@ const App = () => {
 
   return (<div className="App">
         <ToastContainer />
-    <Routes>
       {userSession ?
         <>
+          <Routes>
+       
+          <Route path="home" element={<Home userName={userSession.userName} TwitchId={userSession.twitchId} profileImage={userSession.profileImage}/>} />
+          <Route path="profile" element={<Profile userName={userSession.userName} TwitchId={userSession.twitchId} profileImage={userSession.profileImage}/>} />
+          <Route path="profile/*" element={<Navigate to="/profile" />}  />
           <Route path="*" element={<Navigate to="/home" />} />
-          <Route path="/home" element={<Home userName={userSession.userName} TwitchId={userSession.twitchId} profileImage={userSession.profileImage}/>} />
-          <Route path="/profile" element={<Profile />} />
+          </Routes>
         </> :
         <>
+          <Routes>
+   
+          <Route path="register" element={<Register />} />
+          <Route path="faq" element={<Faq />} />
           <Route path="*" element={<Navigate to="/register" />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/faq" element={<Faq />} />
+          </Routes>
         </>}
-
-    </Routes>
   </div>
   );
 }
