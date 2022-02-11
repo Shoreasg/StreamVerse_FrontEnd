@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Layout, Row, Divider, Spin } from 'antd';
+import { Layout,Divider, Spin } from 'antd';
 import PageHeader from "../components/PageHeader";
 import PageFooter from "../components/PageFooter";
 import axios from "axios";
@@ -22,8 +22,8 @@ const Home = ({ userName, TwitchId, profileImage }) => {
 
 
     const getFeed = async () => {
-        
-       await axios.get(`${process.env.REACT_APP_DEV_BACKEND_URL}/GetFeed`, { withCredentials: true })
+
+        await axios.get(`${process.env.REACT_APP_DEV_BACKEND_URL}/GetFeed`, { withCredentials: true })
             .then((res) => {
                 setFeed(res.data)
                 setLoading(false)
@@ -63,21 +63,17 @@ const Home = ({ userName, TwitchId, profileImage }) => {
     }, [UpdatedFeed]);
 
     return (
-        <Layout style={{ height: "1000px" }}>
+        <Layout className="w-screen">
             <PageHeader />
-            <Layout>
+            <Layout >
                 <Sider width={"20%"}>
                     <h1 style={{ textAlign: "center" }}>Live Channels that you Followed</h1>
-                    <FollowedLiveCard liveChannels={GetLiveChannels} />
+                    <FollowedLiveCard liveChannels={GetLiveChannels}  />
                 </Sider>
-                <Content>
-                    <Divider />
-                    <Row justify="center" align="middle" >
-                        <PostStatus userName={userName} TwitchId={TwitchId} profileImage={profileImage} setUpdatedFeed={setUpdatedFeed} />
-                    </Row>
-                    <Divider />
-                    {Loading?<Spin size="large" style={{width: 1200}}/>: <NewsFeed Feed={Feed} setUpdatedFeed={setUpdatedFeed} TwitchId={TwitchId}/>}
-                  
+                <Content className="flex flex-col items-center pt-10">
+               <PostStatus userName={userName} TwitchId={TwitchId} profileImage={profileImage} setUpdatedFeed={setUpdatedFeed} Loading={Loading}/>
+                    <h1>News Feed</h1>
+                    {Loading ? <Spin size="large" tip={"Loading..."}/> : <NewsFeed Feed={Feed} setUpdatedFeed={setUpdatedFeed} TwitchId={TwitchId} />}
                 </Content>
                 <Sider width={"20%"}>
                     <h1 style={{ textAlign: "center" }}>Your Latest Highlights</h1>

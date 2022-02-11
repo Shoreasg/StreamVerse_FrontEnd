@@ -1,13 +1,12 @@
 import React from "react";
 import { toast } from 'react-toastify';
 import { Button, Input, Form, Card, Comment, Avatar } from 'antd';
-import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import axios from "axios";
 const { TextArea } = Input;
 
 
 
-const PostStatus = ({ userName, TwitchId, setUpdatedFeed, profileImage }) => {
+const PostStatus = ({ userName, TwitchId, setUpdatedFeed, profileImage, Loading }) => {
     const [form] = Form.useForm();
 
     const onPostStatus = (data) => {
@@ -43,14 +42,16 @@ const PostStatus = ({ userName, TwitchId, setUpdatedFeed, profileImage }) => {
     }
 
     return (
-        <Form onFinish={onPostStatus} form={form} autoComplete="off" style={{ width: "50%" }}>
-            <Form.Item
+
+        <Form onFinish={onPostStatus} form={form} autoComplete="off" className="w-3/4">
+            {Loading ? <Form.Item
                 name="status"
                 rules={[{ required: true, message: "Status cannot be empty" }]}>
                 <Card
                     actions={[
-                        <EditOutlined key="edit" />,
-                        <DeleteOutlined key="delete" />,
+                        <Button type="primary" htmlType="submit" block disabled={true}>
+                            Submit
+                        </Button>
                     ]}
                 >
                     <Comment
@@ -59,23 +60,36 @@ const PostStatus = ({ userName, TwitchId, setUpdatedFeed, profileImage }) => {
                             <TextArea
 
                                 showCount
-                                autoSize={{ minRows: 5, maxRows: 6 }}
+                                autoSize={{ minRows: 3, maxRows: 4 }}
+                                maxLength={280}
+                                placeholder="What's up!"
+                                bordered={false}
+                                disabled={true} />
+                        } />
+                </Card>
+            </Form.Item> : <Form.Item
+                name="status"
+                rules={[{ required: true, message: "Status cannot be empty" }]}>
+                <Card
+                    actions={[
+                        <Button type="primary" htmlType="submit" block >
+                            Submit
+                        </Button>
+                    ]}
+                >
+                    <Comment
+                        avatar={<Avatar src={profileImage} alt={userName} />}
+                        content={
+                            <TextArea
+
+                                showCount
+                                autoSize={{ minRows: 3, maxRows: 4 }}
                                 maxLength={280}
                                 placeholder="What's up!"
                                 bordered={false} />
                         } />
-
-
                 </Card>
-
-
-            </Form.Item>
-            <Form.Item >
-                <Button type="primary" htmlType="submit" style={{ left: "87%" }}>
-                    Submit
-                </Button>
-            </Form.Item>
-
+            </Form.Item>}
         </Form>
 
     )

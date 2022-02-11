@@ -8,7 +8,7 @@ import moment from 'moment';
 import Swal from 'sweetalert2'
 import axios from "axios";
 
-const NewsFeed = ({ Feed, setUpdatedFeed, TwitchId }) => {
+const ProfileFeed = ({ ProfileFeed, setUpdatedProfileFeed, TwitchId }) => {
 
     const handleEdit = (e) => {
 
@@ -39,7 +39,7 @@ const NewsFeed = ({ Feed, setUpdatedFeed, TwitchId }) => {
                                     draggable: true,
                                     progress: undefined,
                                 });
-                                setUpdatedFeed(true)
+                                setUpdatedProfileFeed(true)
                             })
                     }
                 }).catch((err) => {
@@ -85,7 +85,7 @@ const NewsFeed = ({ Feed, setUpdatedFeed, TwitchId }) => {
                                     draggable: true,
                                     progress: undefined,
                                 });
-                                setUpdatedFeed(true)
+                                setUpdatedProfileFeed(true)
                             })
                     }
                 }).catch((err) => {
@@ -108,7 +108,7 @@ const NewsFeed = ({ Feed, setUpdatedFeed, TwitchId }) => {
     return (
         <List className="w-3/4">
             <VirtualList
-                data={Feed}
+                data={ProfileFeed}
                 height={400}
                 itemHeight={300}
                 itemKey="id"
@@ -150,4 +150,4 @@ const NewsFeed = ({ Feed, setUpdatedFeed, TwitchId }) => {
 }
 
 
-export default NewsFeed
+export default ProfileFeed

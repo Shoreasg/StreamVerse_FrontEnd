@@ -14,8 +14,9 @@ const UserVideoCard = ({ Videos }) => {
 
                     {item => (
                         <List.Item key={item._id}>
-                            <Card style={{ width: "100%" }}
+                            <Card
                                 cover={<img alt={item.title} src={item.thumbnail_url.replace('%{width}', '600').replace('%{height}', '600')} />}
+                                hoverable={true}
                             >
                                 <a href={item.url} target="_blank" rel="noreferrer">
                                     <List.Item.Meta

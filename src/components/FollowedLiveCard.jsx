@@ -14,15 +14,15 @@ const FollowedLiveCard = ({ liveChannels }) => {
                 itemKey="id"
             >
                 {item => (
-                    <Card>
+                    <Card hoverable={true} style={{height: 100}}>
                         <a href={`https://www.twitch.tv/${item.user_login}`}>
                             <List.Item key={item.id}>
                                 <List.Item.Meta
                                     avatar={<Avatar src={item.thumbnail_url.replace('{width}', '70').replace('{height}', '70')} />}
                                     title={item.user_name}
-                                    description={item.game_name}
+                                    description={<p style={{fontSize: "12px", whiteSpace: 'pre-wrap'}}>{item.game_name}</p>}
                                 />
-                                <div>Viewers {item.viewer_count}</div>
+                                <div style={{fontSize: "12px"}}>Viewers {item.viewer_count}</div>
                             </List.Item>
                         </a>
                     </Card>
