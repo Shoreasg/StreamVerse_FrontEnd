@@ -21,8 +21,9 @@ const App = () => {
           <Routes>
        
           <Route path="home" element={<Home userName={userSession.userName} TwitchId={userSession.twitchId} profileImage={userSession.profileImage}/>} />
-          <Route path="profile" element={<Profile userName={userSession.userName} TwitchId={userSession.twitchId} profileImage={userSession.profileImage}/>} />
-          <Route path="profile/*" element={<Navigate to="/profile" />}  />
+          <Route path="profile" element={<Profile userName={userSession.userName} TwitchId={userSession.twitchId} profileImage={userSession.profileImage} 
+          followers={userSession.followers} followings={userSession.followings}/>} />
+          <Route path="profile/:userId" element={<Home userName={userSession.userName} TwitchId={userSession.twitchId} profileImage={userSession.profileImage}/>} />
           <Route path="*" element={<Navigate to="/home" />} />
           </Routes>
         </> :

@@ -5,7 +5,8 @@ import PostStatus from "../components/PostStatus";
 import axios from "axios";
 import { Layout, Image, Spin, Typography } from 'antd';
 import ProfileFeed from "../components/ProfileFeed";
-const { Content } = Layout;
+import FollwersList from "../components/FollwersList";
+const { Content,Sider } = Layout;
 const { Title } = Typography;
 
 
@@ -14,6 +15,8 @@ const Profile = ({ userName, TwitchId, profileImage }) => {
     const [UserFeed, setUserFeed] = useState([]);
     const [UpdatedFeed, setUpdatedFeed] = useState(false);
     const [Loading, setLoading] = useState(true);
+
+
     const getProfileFeed = async () => {
 
         await axios.get(`${process.env.REACT_APP_DEV_BACKEND_URL}/GetUserFeed`, { withCredentials: true })
@@ -23,6 +26,7 @@ const Profile = ({ userName, TwitchId, profileImage }) => {
             })
     }
 
+ 
     useEffect(() => {
         getProfileFeed()
         setUpdatedFeed(false)
@@ -32,6 +36,10 @@ const Profile = ({ userName, TwitchId, profileImage }) => {
     return (
         <Layout style={{ height: "100vh" }}>
             <PageHeader />
+            <Layout>
+                <Sider width="50%" className="relative flex flex-col items-center mt-1">
+                    <FollwersList/>
+                </Sider>
             <Content className="flex flex-col items-center ">
                 <div className="flex flex-col items-center ">
                     <Image
@@ -47,6 +55,7 @@ const Profile = ({ userName, TwitchId, profileImage }) => {
                 </div>
 
             </Content>
+            </Layout>
             <PageFooter />
         </Layout>
 
