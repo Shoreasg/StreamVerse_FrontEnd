@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Layout,Divider, Spin } from 'antd';
-import PageHeader from "../components/PageHeader";
 import PageFooter from "../components/PageFooter";
 import axios from "axios";
 import FollowedLiveCard from "../components/FollowedLiveCard";
@@ -22,34 +21,25 @@ const Home = ({ userName, TwitchId, profileImage }) => {
 
 
     const getFeed = async () => {
-
-        await axios.get(`${process.env.REACT_APP_DEV_BACKEND_URL}/GetFeed`, { withCredentials: true })
-            .then((res) => {
-                setFeed(res.data)
+        const Feed = await axios.get(`${process.env.REACT_APP_DEV_BACKEND_URL}/GetFeed`, { withCredentials: true })
+                setFeed(Feed.data)
                 setLoading(false)
-            })
     }
 
 
-    const getFollowedChannels = () => {
-        axios.get(`${process.env.REACT_APP_DEV_BACKEND_URL}/GetFollowedChannels`, { withCredentials: true })
-            .then((res) => {
-                setGetLiveChannels([...res.data.data])
-            })
+    const getFollowedChannels = async () => {
+        const FollowedChannels = await axios.get(`${process.env.REACT_APP_DEV_BACKEND_URL}/GetFollowedChannels`, { withCredentials: true })
+                setGetLiveChannels([...FollowedChannels.data.data])
     }
 
-    const getUserVideos = () => {
-        axios.get(`${process.env.REACT_APP_DEV_BACKEND_URL}/GetUserVideos`, { withCredentials: true })
-            .then((res) => {
-                setGetVideo([...res.data.data])
-            })
+    const getUserVideos = async () => {
+        const UserVideos = await   axios.get(`${process.env.REACT_APP_DEV_BACKEND_URL}/GetUserVideos`, { withCredentials: true })
+                setGetVideo([...UserVideos.data.data])
     }
 
-    const getUserClips = () => {
-        axios.get(`${process.env.REACT_APP_DEV_BACKEND_URL}/GetUserClips`, { withCredentials: true })
-            .then((res) => {
-                setGetClips([...res.data.data])
-            })
+    const getUserClips = async () => {
+       const UserClips = await axios.get(`${process.env.REACT_APP_DEV_BACKEND_URL}/GetUserClips`, { withCredentials: true })
+                setGetClips([...UserClips.data.data])
     }
 
 
@@ -64,7 +54,6 @@ const Home = ({ userName, TwitchId, profileImage }) => {
 
     return (
         <Layout className="w-screen">
-            <PageHeader />
             <Layout >
                 <Sider width={"20%"}>
                     <h1 style={{ textAlign: "center" }}>Live Channels that you Followed</h1>

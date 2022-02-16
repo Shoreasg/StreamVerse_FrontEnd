@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import PageFooter from "../components/PageFooter";
-import PageHeader from "../components/PageHeader";
 import PostStatus from "../components/PostStatus";
 import axios from "axios";
 import { Layout, Image, Spin, Typography } from 'antd';
@@ -19,11 +18,9 @@ const Profile = ({ userName, TwitchId, profileImage }) => {
 
     const getProfileFeed = async () => {
 
-        await axios.get(`${process.env.REACT_APP_DEV_BACKEND_URL}/GetUserFeed`, { withCredentials: true })
-            .then((res) => {
-                setUserFeed(res.data)
+       const ProfileFeed = await axios.get(`${process.env.REACT_APP_DEV_BACKEND_URL}/GetUserFeed`, { withCredentials: true })        
+                setUserFeed(ProfileFeed.data)
                 setLoading(false)
-            })
     }
 
  
@@ -35,9 +32,8 @@ const Profile = ({ userName, TwitchId, profileImage }) => {
 
     return (
         <Layout style={{ height: "100vh" }}>
-            <PageHeader />
             <Layout>
-                <Sider width="50%" className="relative flex flex-col items-center mt-1">
+                <Sider width="40%" className="relative flex flex-col items-center mt-1">
                     <FollwersList/>
                 </Sider>
             <Content className="flex flex-col items-center ">
@@ -48,7 +44,7 @@ const Profile = ({ userName, TwitchId, profileImage }) => {
                         preview={{ src: `${profileImage}` }} />
                     <Title level={2}>{userName}</Title>
                 </div>
-                <div className="flex flex-col items-center w-1/2 h-2">
+                <div className="flex flex-col items-center w-3/4 h-2">
                     <PostStatus userName={userName} TwitchId={TwitchId} profileImage={profileImage} setUpdatedFeed={setUpdatedFeed} Loading={Loading} />
                     <h1>News Feed</h1>
                     {Loading ? <Spin size="large" tip={"Loading..."} /> : <ProfileFeed ProfileFeed={UserFeed} setUpdatedProfileFeed={setUpdatedFeed} TwitchId={TwitchId} />}

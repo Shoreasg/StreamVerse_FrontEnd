@@ -4,12 +4,13 @@ import { Link } from 'react-router-dom';
 import axios from "axios";
 const { Title } = Typography;
 
-const FollwersList = () => {
+const OtherFollowersList = ({UserId, id}) => {
     const [Followers, setFollowers] = useState([]);
     const [Following, setFollowing] = useState([]);
     const [Loading, setLoading] = useState(true);
+
     const getFollowing = async () => {
-        const GetFollowersList = await axios.get(`${process.env.REACT_APP_DEV_BACKEND_URL}/GetFollowers`, { withCredentials: true })
+        const GetFollowersList = await axios.get(`${process.env.REACT_APP_DEV_BACKEND_URL}/GetFollowers/${UserId}`, { withCredentials: true })
         setFollowing(GetFollowersList.data.followings)
         setFollowers(GetFollowersList.data.followers)
         setLoading(false)
@@ -21,8 +22,9 @@ const FollwersList = () => {
     useEffect(() => {
         getFollowing()
         setLoading(true)
-    }, []);
+    }, [UserId]);
     
+    console.log(Followers)
 
     return (
         <>
@@ -30,7 +32,7 @@ const FollwersList = () => {
                 <>
                     <List
                         grid={{ gutter: 8 }}
-                        pagination={{ position: "", total: Followers.length, pageSize: 4, simple: true }}
+                        // pagination={{ position: "", total: Followers.length, pageSize: 4, simple: true }}
                         dataSource={Followers}
                         header={<Title>Followers</Title>}
                         renderItem={item => (
@@ -50,7 +52,7 @@ const FollwersList = () => {
                     </List>
                     <List
                         grid={{ gutter: 8 }}
-                        pagination={{ position: "", total: Followers.length, pageSize: 4, simple: true }}
+                        // pagination={{ position: "", total: Followers.length, pageSize: 4, simple: true }}
                         dataSource={Following}
                         header={<Title>Following</Title>}
                         renderItem={item => (
@@ -77,4 +79,4 @@ const FollwersList = () => {
 };
 
 
-export default FollwersList
+export default OtherFollowersList

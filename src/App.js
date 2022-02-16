@@ -8,6 +8,8 @@ import Faq from './pages/Faq';
 import Home from './pages/Home';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
+import PageHeader from "./components/PageHeader";
+import OtherUserProfile from './pages/OtherUserProfile';
 
 const App = () => {
 
@@ -18,18 +20,16 @@ const App = () => {
         <ToastContainer />
       {userSession ?
         <>
+          <PageHeader />
           <Routes>
-       
           <Route path="home" element={<Home userName={userSession.userName} TwitchId={userSession.twitchId} profileImage={userSession.profileImage}/>} />
-          <Route path="profile" element={<Profile userName={userSession.userName} TwitchId={userSession.twitchId} profileImage={userSession.profileImage} 
-          followers={userSession.followers} followings={userSession.followings}/>} />
-          <Route path="profile/:userId" element={<Home userName={userSession.userName} TwitchId={userSession.twitchId} profileImage={userSession.profileImage}/>} />
+          <Route path="profile" element={<Profile userName={userSession.userName} TwitchId={userSession.twitchId} profileImage={userSession.profileImage}/>} />
+          <Route path="profile/:id" element={<OtherUserProfile/>} />
           <Route path="*" element={<Navigate to="/home" />} />
           </Routes>
         </> :
         <>
           <Routes>
-   
           <Route path="register" element={<Register />} />
           <Route path="faq" element={<Faq />} />
           <Route path="*" element={<Navigate to="/register" />} />
