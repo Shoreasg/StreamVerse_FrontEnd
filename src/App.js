@@ -7,6 +7,7 @@ import { AuthContext } from './context/AuthContextProvider';
 import Faq from './pages/Faq';
 import Home from './pages/Home';
 import Register from './pages/Register';
+import PageHeader from "./components/PageHeader";
 import Profile from './pages/Profile';
 
 const App = () => {
@@ -18,17 +19,15 @@ const App = () => {
         <ToastContainer />
       {userSession ?
         <>
+          <PageHeader userName={userSession.userName}/>
           <Routes>
-       
           <Route path="home" element={<Home userName={userSession.userName} TwitchId={userSession.twitchId} profileImage={userSession.profileImage}/>} />
-          <Route path="profile" element={<Profile userName={userSession.userName} TwitchId={userSession.twitchId} profileImage={userSession.profileImage}/>} />
-          <Route path="profile/*" element={<Navigate to="/profile" />}  />
+          <Route path="profile/:id" element={<Profile userName={userSession.userName} TwitchId={userSession.twitchId} profileImage={userSession.profileImage}/>} />
           <Route path="*" element={<Navigate to="/home" />} />
           </Routes>
         </> :
         <>
           <Routes>
-   
           <Route path="register" element={<Register />} />
           <Route path="faq" element={<Faq />} />
           <Route path="*" element={<Navigate to="/register" />} />

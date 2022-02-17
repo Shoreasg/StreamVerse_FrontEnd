@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom"
 const { Header } = Layout;
 const { Search } = Input;
 
-const PageHeader = () => {
+const PageHeader = ({ userName }) => {
     let navigate = useNavigate();
 
 
@@ -23,12 +23,12 @@ const PageHeader = () => {
             <div className="flex flex-row">
                 <div className="relative right-4">
                     <Button type="link" onClick={() => navigate("/home")}>Home</Button></div>
-                    <div className="relative right-4">
-                    <Button type="link" onClick={() => navigate("/profile")}>Profile</Button>
+                <div className="relative right-4">
+                    <Button type="link" onClick={() => navigate(`/profile/${userName}`)}>Profile</Button>
                 </div>
-            
+
                 <div className="flex items-center mx-auto">
-                    <Search placeholder="input search text" enterButton size="large" className="relative right-3"/>
+                    <Search placeholder="input search text" enterButton size="large" className="relative right-3" />
                 </div>
                 <div className="relative left-6">
                     <Button type="link" onClick={handleLogOut}>Logout</Button>
