@@ -4,25 +4,28 @@ import { Link } from 'react-router-dom';
 import axios from "axios";
 const { Title } = Typography;
 
-const FollwersList = () => {
+const FollowersList = ({ id }) => {
     const [Followers, setFollowers] = useState([]);
     const [Following, setFollowing] = useState([]);
     const [Loading, setLoading] = useState(true);
-    const getFollowing = async () => {
-        const GetFollowersList = await axios.get(`${process.env.REACT_APP_DEV_BACKEND_URL}/GetFollowers`, { withCredentials: true })
-        setFollowing(GetFollowersList.data.followings)
-        setFollowers(GetFollowersList.data.followers)
-        setLoading(false)
-    }
-
-
-
 
     useEffect(() => {
+        const getFollowing = async () => {
+
+            await axios.get(`${process.env.REACT_APP_DEV_BACKEND_URL}/getuser/${id}`, { withCredentials: true })
+                .then((res) => {
+                    res.data.forEach(async element => {
+                        const GetFollowersList = await axios.get(`${process.env.REACT_APP_DEV_BACKEND_URL}/GetFollowers/${element.id}`, { withCredentials: true })
+                        setFollowing(GetFollowersList.data.followings)
+                        setFollowers(GetFollowersList.data.followers)
+                        setLoading(false)
+                    });
+
+                })
+        }
         getFollowing()
         setLoading(true)
-    }, []);
-    
+    }, [id]);
 
     return (
         <>
@@ -30,7 +33,7 @@ const FollwersList = () => {
                 <>
                     <List
                         grid={{ gutter: 8 }}
-                        pagination={{ position: "", total: Followers.length, pageSize: 4, simple: true }}
+                        pagination={{ position: "bottom", total: Followers.length, pageSize: 4, simple: true }}
                         dataSource={Followers}
                         header={<Title>Followers</Title>}
                         renderItem={item => (
@@ -39,7 +42,7 @@ const FollwersList = () => {
                                     <Card
                                         cover={<img alt={item.title} src={item.profile_image_url} />}
                                         hoverable={true}
-                                        style={{ width: 150 }}
+                                        style={{ width: 180, textAlign: "center" }}
                                     >
                                         <List.Item.Meta
                                             title={item.display_name} />
@@ -50,7 +53,7 @@ const FollwersList = () => {
                     </List>
                     <List
                         grid={{ gutter: 8 }}
-                        pagination={{ position: "", total: Followers.length, pageSize: 4, simple: true }}
+                        pagination={{ position: "bottom", total: Following.length, pageSize: 4, simple: true }}
                         dataSource={Following}
                         header={<Title>Following</Title>}
                         renderItem={item => (
@@ -59,7 +62,7 @@ const FollwersList = () => {
                                     <Card
                                         cover={<img alt={item.title} src={item.profile_image_url} />}
                                         hoverable={true}
-                                        style={{ width: 150 }}
+                                        style={{ width: 180, textAlign: "center" }}
                                     >
                                         <List.Item.Meta
                                             title={item.display_name} />
@@ -77,4 +80,4 @@ const FollwersList = () => {
 };
 
 
-export default FollwersList
+export default FollowersList
