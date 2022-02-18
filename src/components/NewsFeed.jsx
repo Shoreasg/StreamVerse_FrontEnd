@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Avatar, List, Comment, Tooltip } from 'antd';
+import { Card, Avatar, List, Comment, Tooltip, Empty } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { toast } from 'react-toastify';
 import VirtualList from 'rc-virtual-list';
@@ -106,47 +106,51 @@ const NewsFeed = ({ Feed, setUpdatedFeed, TwitchId }) => {
             })
     }
     return (
-        <List className="w-3/4">
-            <VirtualList
-                data={Feed}
-                height={400}
-                itemHeight={300}
-                itemKey="id"
-            >
-                {item => (
-                    <List.Item key={item._id}>
-                        <Card
-                            className="w-full"
-                            actions={
-                                TwitchId === item.twitchId ?
-                                    [
-                                        <EditOutlined key="edit" onClick={handleEdit} id={item._id} />,
-                                        <DeleteOutlined key="delete" onClick={handleDelete} id={item._id} />,
-                                    ] : ""}
-                        >
-                            <Comment
-                                author={item.userName}
-                                avatar={<Avatar src={item.profileImage} />}
-                                content={
-                                    <p>
-                                        <Linkify options={{ target: '_blank' }}><br />{item.status}</Linkify>
-                                    </p>
-                                }
-                                datetime={
-                                    item.createdAt === item.updatedAt ?
-                                        <Tooltip title={moment(item.createdAt).format('MMMM Do YYYY, h:mm:ss a')}>
-                                            <span>{moment(item.createdAt).startOf().fromNow()}</span>
-                                        </Tooltip> :
-                                        <Tooltip title={moment(item.createdAt).format('MMMM Do YYYY, h:mm:ss a')}>
-                                            <span>{moment(item.updatedAt).startOf().fromNow()} (Edited)</span>
-                                        </Tooltip>
-                                } />
-                        </Card>
-                    </List.Item>
-                )}
+        <>
+            {Feed.length !== 0 ?   <List className="w-3/4">
+                <VirtualList
+                    data={Feed}
+                    height={400}
+                    itemHeight={300}
+                    itemKey="id"
+                >
+                    {item => (
+                        <List.Item key={item._id}>
+                            <Card
+                                className="w-full"
 
-            </VirtualList>
-        </List>)
+                            >
+                                <Comment
+                                    actions={
+                                        TwitchId === item.twitchId ?
+                                            [
+                                                <EditOutlined key="edit" onClick={handleEdit} id={item._id} />,
+                                                <DeleteOutlined key="delete" onClick={handleDelete} id={item._id} />,
+                                            ] : ""}
+                                    author={item.userName}
+                                    avatar={<Avatar src={item.profileImage} />}
+                                    content={
+                                        <p>
+                                            <Linkify options={{ target: '_blank' }}><br />{item.status}</Linkify>
+                                        </p>
+                                    }
+                                    datetime={
+                                        item.createdAt === item.updatedAt ?
+                                            <Tooltip title={moment(item.createdAt).format('MMMM Do YYYY, h:mm:ss a')}>
+                                                <span>{moment(item.createdAt).startOf().fromNow()}</span>
+                                            </Tooltip> :
+                                            <Tooltip title={moment(item.createdAt).format('MMMM Do YYYY, h:mm:ss a')}>
+                                                <span>{moment(item.updatedAt).startOf().fromNow()} (Edited)</span>
+                                            </Tooltip>
+                                    } />
+                            </Card>
+                        </List.Item>
+                    )}
+
+                </VirtualList>
+            </List>:<Empty/>}
+          
+        </>)
 }
 
 

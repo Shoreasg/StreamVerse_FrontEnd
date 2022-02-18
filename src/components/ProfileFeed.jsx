@@ -9,11 +9,9 @@ import Swal from 'sweetalert2'
 import axios from "axios";
 
 const ProfileFeed = ({ ProfileFeed, setUpdatedProfileFeed, TwitchId }) => {
-    console.log(ProfileFeed)
-    console.log(TwitchId)
-    const handleEdit = (e) => {
+    const handleEdit = async (e) => {
 
-        axios.get(`${process.env.REACT_APP_DEV_BACKEND_URL}/GetPost/${e.currentTarget.id}`, { withCredentials: true })
+        await axios.get(`${process.env.REACT_APP_DEV_BACKEND_URL}/GetPost/${e.currentTarget.id}`, { withCredentials: true })
             .then((res) => {
                 Swal.fire({
                     title: "Edit your Status!",
@@ -60,9 +58,9 @@ const ProfileFeed = ({ ProfileFeed, setUpdatedProfileFeed, TwitchId }) => {
 
             })
     }
-    const handleDelete = (e) => {
+    const handleDelete = async (e) => {
 
-        axios.get(`${process.env.REACT_APP_DEV_BACKEND_URL}/GetPost/${e.currentTarget.id}`, { withCredentials: true })
+        await axios.get(`${process.env.REACT_APP_DEV_BACKEND_URL}/GetPost/${e.currentTarget.id}`, { withCredentials: true })
             .then((res) => {
                 Swal.fire({
                     title: 'Are you sure?',
@@ -121,14 +119,14 @@ const ProfileFeed = ({ ProfileFeed, setUpdatedProfileFeed, TwitchId }) => {
                             <List.Item key={item._id}>
                                 <Card
                                     className="w-full"
-                                    actions={
-                                        TwitchId === item.twitchId ?
-                                            [
-                                                <EditOutlined key="edit" onClick={handleEdit} id={item._id} />,
-                                                <DeleteOutlined key="delete" onClick={handleDelete} id={item._id} />,
-                                            ] : ""}
                                 >
                                     <Comment
+                                        actions={
+                                            TwitchId === item.twitchId ?
+                                                [
+                                                    <EditOutlined key="edit" onClick={handleEdit} id={item._id} />,
+                                                    <DeleteOutlined key="delete" onClick={handleDelete} id={item._id} />,
+                                                ] : ""}
                                         author={item.userName}
                                         avatar={<Avatar src={item.profileImage} />}
                                         content={
