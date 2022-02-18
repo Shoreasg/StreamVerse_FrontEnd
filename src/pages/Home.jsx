@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Layout, Divider, Spin } from 'antd';
-import PageFooter from "../components/PageFooter";
 import axios from "axios";
 import FollowedLiveCard from "../components/FollowedLiveCard";
 import UserVideoCard from "../components/UserVideoCard";
@@ -53,7 +52,6 @@ const Home = ({ userName, TwitchId, profileImage }) => {
     }, [UpdatedFeed]);
 
     return (
-        <Layout className="w-screen">
             <Layout >
                 <Sider width={"20%"}>
                     <h1 style={{ textAlign: "center" }}>Live Channels that you Followed</h1>
@@ -72,9 +70,6 @@ const Home = ({ userName, TwitchId, profileImage }) => {
                     <UserClipsCard Clips={GetClips} />
                 </Sider>
             </Layout>
-            <PageFooter />
-        </Layout>
-
     )
 }
 export default Home

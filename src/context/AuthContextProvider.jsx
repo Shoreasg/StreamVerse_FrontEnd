@@ -8,11 +8,18 @@ const AuthContextProvider = (props) => {
 
 
 	useEffect(() => {
-		axios
-			.get(`${process.env.REACT_APP_DEV_BACKEND_URL}/getuser`, { withCredentials: true })
-			.then((res) => {
-				setUserSession(res.data);
-			});
+		const getUser = async () => {
+			const User = await axios.get(`${process.env.REACT_APP_DEV_BACKEND_URL}/getuser`, { withCredentials: true })
+			setUserSession(User.data);
+
+		}
+		const getFollowers = async () =>
+		{
+			 await axios
+			.get(`${process.env.REACT_APP_DEV_BACKEND_URL}/GetFollowers`, { withCredentials: true })
+		} 
+		getUser()
+		getFollowers()
 	}, []);
 
 	return (

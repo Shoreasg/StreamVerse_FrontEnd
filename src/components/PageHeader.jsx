@@ -13,7 +13,6 @@ const PageHeader = ({ userName }) => {
         axios.delete(`${process.env.REACT_APP_DEV_BACKEND_URL}/logout`, { withCredentials: true })
             .then((res) => {
                 if (res.status === 200) {
-                    console.log(res.status)
                     navigate(0)
                 }
             })
@@ -26,9 +25,11 @@ const PageHeader = ({ userName }) => {
                 <div className="relative right-4">
                     <Button type="link" onClick={() => navigate(`/profile/${userName}`)}>Profile</Button>
                 </div>
-
+                {userName === "shoreasg" ? <div className="relative right-4">
+                    <Button type="link" onClick={() => navigate(`/dashboard/`)}>Dashboard</Button>
+                </div> : ""}
                 <div className="flex items-center mx-auto">
-                    <Search placeholder="input search text" enterButton size="large" className="relative right-3" />
+                    <Search placeholder="input search text" enterButton size="large" className="relative right-10" />
                 </div>
                 <div className="relative left-6">
                     <Button type="link" onClick={handleLogOut}>Logout</Button>
