@@ -1,21 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import PostStatus from "../components/PostStatus";
 import axios from "axios";
 import { Layout, Image, Spin, Typography } from 'antd';
 import ProfileFeed from "../components/ProfileFeed";
 import { useParams } from "react-router";
 import FollowersList from "../components/FollowerList";
+import { AuthContext } from '../context/AuthContextProvider';
 const { Content, Sider } = Layout;
 const { Title } = Typography;
 
 
 
-const Profile = ({ userName, TwitchId, profileImage }) => {
+const Profile = () => {
     const [UserProfile, setUserProfile] = useState([]);
     const [UserFeed, setUserFeed] = useState([]);
     const [UpdatedFeed, setUpdatedFeed] = useState(false);
     const [Loading, setLoading] = useState(true);
     const { id } = useParams();
+    const userSession = useContext(AuthContext)
+
 
 
     useEffect(() => {
@@ -49,10 +52,10 @@ const Profile = ({ userName, TwitchId, profileImage }) => {
                     <Title level={2}>{UserProfile.display_name}</Title>
                 </div>
                 <div className="flex flex-col items-center w-3/4 h-2">
-                    {TwitchId === UserProfile.id ? <PostStatus userName={userName} TwitchId={TwitchId} profileImage={profileImage} setUpdatedFeed={setUpdatedFeed} Loading={Loading} /> : ""}
+                    {userSession.twitchId === UserProfile.id ? <PostStatus setUpdatedFeed={setUpdatedFeed} Loading={Loading} /> : ""}
 
                     <h1>News Feed</h1>
-                    {Loading ? <Spin size="large" tip={"Loading..."} /> : <ProfileFeed ProfileFeed={UserFeed} TwitchId={TwitchId} setUpdatedProfileFeed={setUpdatedFeed} />}
+                    {Loading ? <Spin size="large" tip={"Loading..."} /> : <ProfileFeed ProfileFeed={UserFeed} setUpdatedProfileFeed={setUpdatedFeed} />}
                 </div>
 
             </Content>
