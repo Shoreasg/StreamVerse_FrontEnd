@@ -9,7 +9,7 @@ import NewsFeed from "../components/NewsFeed";
 const { Content, Sider } = Layout;
 
 
-const Home = ({ userName, TwitchId, profileImage }) => {
+const Home = () => {
     const [GetLiveChannels, setGetLiveChannels] = useState([]);
     const [GetVideo, setGetVideo] = useState([]);
     const [GetClips, setGetClips] = useState([]);
@@ -52,24 +52,24 @@ const Home = ({ userName, TwitchId, profileImage }) => {
     }, [UpdatedFeed]);
 
     return (
-            <Layout >
-                <Sider width={"20%"}>
-                    <h1 style={{ textAlign: "center" }}>Live Channels that you Followed</h1>
-                    <FollowedLiveCard liveChannels={GetLiveChannels} />
-                </Sider>
-                <Content className="flex flex-col items-center pt-10">
-                    <PostStatus userName={userName} TwitchId={TwitchId} profileImage={profileImage} setUpdatedFeed={setUpdatedFeed} Loading={Loading} />
-                    <h1>News Feed</h1>
-                    {Loading ? <Spin size="large" tip={"Loading..."} /> : <NewsFeed Feed={Feed} setUpdatedFeed={setUpdatedFeed} TwitchId={TwitchId} />}
-                </Content>
-                <Sider width={"20%"}>
-                    <h1 style={{ textAlign: "center" }}>Your Latest Highlights</h1>
-                    <UserVideoCard Videos={GetVideo} />
-                    <Divider />
-                    <h1 style={{ textAlign: "center" }}>Your Latest Clips</h1>
-                    <UserClipsCard Clips={GetClips} />
-                </Sider>
-            </Layout>
+        <Layout >
+            <Sider width={"20%"}>
+                <h1 style={{ textAlign: "center" }}>Live Channels that you Followed</h1>
+                <FollowedLiveCard liveChannels={GetLiveChannels} />
+            </Sider>
+            <Content className="flex flex-col items-center pt-10">
+                <PostStatus setUpdatedFeed={setUpdatedFeed} Loading={Loading} />
+                <h1>News Feed</h1>
+                {Loading ? <Spin size="large" tip={"Loading..."} /> : <NewsFeed Feed={Feed} setUpdatedFeed={setUpdatedFeed} />}
+            </Content>
+            <Sider width={"20%"}>
+                <h1 style={{ textAlign: "center" }}>Your Latest Highlights</h1>
+                <UserVideoCard Videos={GetVideo} />
+                <Divider />
+                <h1 style={{ textAlign: "center" }}>Your Latest Clips</h1>
+                <UserClipsCard Clips={GetClips} />
+            </Sider>
+        </Layout>
     )
 }
 export default Home

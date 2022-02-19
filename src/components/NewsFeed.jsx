@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+import { AuthContext } from '../context/AuthContextProvider';
 import { Card, Avatar, List, Comment, Tooltip, Empty } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { toast } from 'react-toastify';
@@ -8,11 +9,12 @@ import moment from 'moment';
 import Swal from 'sweetalert2'
 import axios from "axios";
 
-const NewsFeed = ({ Feed, setUpdatedFeed, TwitchId }) => {
+const NewsFeed = ({ Feed, setUpdatedFeed }) => {
+    const userSession = useContext(AuthContext)
 
-    const handleEdit = (e) => {
+    const handleEdit = async (e) => {
 
-        axios.get(`${process.env.REACT_APP_DEV_BACKEND_URL}/GetPost/${e.currentTarget.id}`, { withCredentials: true })
+        await axios.get(`${process.env.REACT_APP_DEV_BACKEND_URL}/GetPost/${e.currentTarget.id}`, { withCredentials: true })
             .then((res) => {
                 Swal.fire({
                     title: "Edit your Status!",
@@ -59,9 +61,9 @@ const NewsFeed = ({ Feed, setUpdatedFeed, TwitchId }) => {
 
             })
     }
-    const handleDelete = (e) => {
+    const handleDelete = async (e) => {
 
-        axios.get(`${process.env.REACT_APP_DEV_BACKEND_URL}/GetPost/${e.currentTarget.id}`, { withCredentials: true })
+        await axios.get(`${process.env.REACT_APP_DEV_BACKEND_URL}/GetPost/${e.currentTarget.id}`, { withCredentials: true })
             .then((res) => {
                 Swal.fire({
                     title: 'Are you sure?',
@@ -107,7 +109,7 @@ const NewsFeed = ({ Feed, setUpdatedFeed, TwitchId }) => {
     }
     return (
         <>
-            {Feed.length !== 0 ?   <List className="w-3/4">
+            {Feed.length !== 0 ? <List className="w-3/4">
                 <VirtualList
                     data={Feed}
                     height={400}
@@ -122,7 +124,7 @@ const NewsFeed = ({ Feed, setUpdatedFeed, TwitchId }) => {
                             >
                                 <Comment
                                     actions={
-                                        TwitchId === item.twitchId ?
+                                        userSession.twitchId === item.twitchId ?
                                             [
                                                 <EditOutlined key="edit" onClick={handleEdit} id={item._id} />,
                                                 <DeleteOutlined key="delete" onClick={handleDelete} id={item._id} />,
@@ -148,8 +150,8 @@ const NewsFeed = ({ Feed, setUpdatedFeed, TwitchId }) => {
                     )}
 
                 </VirtualList>
-            </List>:<Empty/>}
-          
+            </List> : <Empty />}
+
         </>)
 }
 

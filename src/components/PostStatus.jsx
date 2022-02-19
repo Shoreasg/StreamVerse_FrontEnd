@@ -1,17 +1,19 @@
-import React from "react";
+import React, {useContext} from "react";
 import { toast } from 'react-toastify';
 import { Button, Input, Form, Card, Comment, Avatar } from 'antd';
+import { AuthContext } from '../context/AuthContextProvider';
 import axios from "axios";
 const { TextArea } = Input;
 
 
 
-const PostStatus = ({ userName, TwitchId, setUpdatedFeed, profileImage, Loading }) => {
+const PostStatus = ({ setUpdatedFeed,Loading }) => {
+    const userSession = useContext(AuthContext)
     const [form] = Form.useForm();
 
     const onPostStatus = (data) => {
 
-        axios.post(`${process.env.REACT_APP_DEV_BACKEND_URL}/postStatus`, { userName: userName, twitchId: TwitchId, profileImage: profileImage, ...data }, { withCredentials: true }).then((res) => {
+        axios.post(`${process.env.REACT_APP_DEV_BACKEND_URL}/postStatus`, { userName: userSession.userName, twitchId: userSession.twitchId, profileImage: userSession.profileImage, ...data }, { withCredentials: true }).then((res) => {
             if (res.status === 200) {
                 toast.success('Post Successful', {
                     position: "top-right",
@@ -55,7 +57,7 @@ const PostStatus = ({ userName, TwitchId, setUpdatedFeed, profileImage, Loading 
                     ]}
                 >
                     <Comment
-                        avatar={<Avatar src={profileImage} alt={userName} />}
+                        avatar={<Avatar src={userSession.profileImage} alt={userSession.userName} />}
                         content={
                             <TextArea
 
@@ -78,7 +80,7 @@ const PostStatus = ({ userName, TwitchId, setUpdatedFeed, profileImage, Loading 
                     ]}
                 >
                     <Comment
-                        avatar={<Avatar src={profileImage} alt={userName} />}
+                        avatar={<Avatar src={userSession.profileImage} alt={userSession.userName} />}
                         content={
                             <TextArea
 

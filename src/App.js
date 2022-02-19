@@ -18,26 +18,26 @@ const App = () => {
   console.log(userSession)
 
   return (<div className="App">
-        <ToastContainer />
-      {userSession ?
-        <>
-          <PageHeader userName={userSession.userName}/>
-          <Routes>
-          <Route path="home" element={<Home userName={userSession.userName} TwitchId={userSession.twitchId} profileImage={userSession.profileImage}/>} />
-          <Route path="Dashboard" element={<Dashboard userName={userSession.userName} TwitchId={userSession.twitchId} profileImage={userSession.profileImage}/>} />
-          <Route path="profile/:id" element={<Profile userName={userSession.userName} TwitchId={userSession.twitchId} profileImage={userSession.profileImage}/>} />
+    <ToastContainer />
+    {userSession ?
+      <>
+        <PageHeader />
+        <Routes>
+          <Route path="home" element={<Home />} />
+          <Route path="Dashboard" element={<Dashboard />} />
+          <Route path="profile/:id" element={<Profile />} />
           <Route path="*" element={<Navigate to="/home" />} />
-          </Routes>
-          <PageFooter />
-        </> :
-        <>
-          <Routes>
+        </Routes>
+        <PageFooter />
+      </> :
+      <>
+        <Routes>
           <Route path="register" element={<Register />} />
           <Route path="faq" element={<Faq />} />
           <Route path="*" element={<Navigate to="/register" />} />
-          </Routes>
-          <PageFooter />
-        </>}
+        </Routes>
+        <PageFooter />
+      </>}
   </div>
   );
 }

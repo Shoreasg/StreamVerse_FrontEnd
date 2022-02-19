@@ -1,6 +1,7 @@
-import React from "react";
+import React, {useContext} from "react";
 import { Card, Avatar, List, Comment, Tooltip, Empty } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import { AuthContext } from '../context/AuthContextProvider';
 import { toast } from 'react-toastify';
 import VirtualList from 'rc-virtual-list';
 import Linkify from 'linkify-react';
@@ -8,7 +9,8 @@ import moment from 'moment';
 import Swal from 'sweetalert2'
 import axios from "axios";
 
-const ProfileFeed = ({ ProfileFeed, setUpdatedProfileFeed, TwitchId }) => {
+const ProfileFeed = ({ ProfileFeed, setUpdatedProfileFeed }) => {
+    const userSession = useContext(AuthContext)
     const handleEdit = async (e) => {
 
         await axios.get(`${process.env.REACT_APP_DEV_BACKEND_URL}/GetPost/${e.currentTarget.id}`, { withCredentials: true })
@@ -122,7 +124,7 @@ const ProfileFeed = ({ ProfileFeed, setUpdatedProfileFeed, TwitchId }) => {
                                 >
                                     <Comment
                                         actions={
-                                            TwitchId === item.twitchId ?
+                                            userSession.twitchId === item.twitchId ?
                                                 [
                                                     <EditOutlined key="edit" onClick={handleEdit} id={item._id} />,
                                                     <DeleteOutlined key="delete" onClick={handleDelete} id={item._id} />,
