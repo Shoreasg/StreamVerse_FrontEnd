@@ -29,16 +29,20 @@ const UsersPostList = ({ GetAllFeed, setUpdatedFeed }) => {
                         console.log(result.value)
                         await axios.delete(`${process.env.REACT_APP_DEV_BACKEND_URL}/DeletePost/${res.data._id}`,
                             { withCredentials: true }).then((res) => {
-                                toast.success(res.data, {
-                                    position: "top-right",
-                                    autoClose: 5000,
-                                    hideProgressBar: false,
-                                    closeOnClick: true,
-                                    pauseOnHover: false,
-                                    draggable: true,
-                                    progress: undefined,
-                                });
-                                setUpdatedFeed(true)
+                                if(res.status === 200)
+                                {
+                                    toast.success(res.data, {
+                                        position: "top-right",
+                                        autoClose: 5000,
+                                        hideProgressBar: false,
+                                        closeOnClick: true,
+                                        pauseOnHover: false,
+                                        draggable: true,
+                                        progress: undefined,
+                                    });
+                                    setUpdatedFeed(true)
+                                }
+                                
                             })
                     }
                 }).catch((err) => {

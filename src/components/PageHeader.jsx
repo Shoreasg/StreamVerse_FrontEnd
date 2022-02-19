@@ -1,4 +1,4 @@
-import React,{useContext} from "react";
+import React, { useContext } from "react";
 import { Button, Layout, Input } from 'antd';
 import axios from "axios";
 import { useNavigate } from "react-router-dom"
@@ -22,17 +22,20 @@ const PageHeader = () => {
     const handleDeleteAccount = async () => {
         await Swal.fire({
             title: 'Are you sure?',
-            text: "You won't be able to revert this!",
+            text: "You won't be able to revert this and you will be redirect to our register page",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#6441a5',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Yes, delete it!'
-        }).then((result)=>
-        {
-            if(result.isConfirmed)
-            {
-
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                await axios.delete(`${process.env.REACT_APP_DEV_BACKEND_URL}/DeleteOwnUser/${userSession.twitchId}`,
+                    { withCredentials: true }).then((res) => {
+                        if (res.status === 200) {
+                            navigate(0)
+                        }
+                    })
             }
         })
     }
@@ -47,11 +50,11 @@ const PageHeader = () => {
                 {userSession.userName === "shoreasg" ? <div className="relative right-4">
                     <Button type="link" onClick={() => navigate(`/dashboard/`)}>Dashboard</Button>
                 </div> : ""}
-                <div className="flex items-center mx-auto">
+                <div className="flex items-center mx-auto relative left-20">
                     <Search placeholder="input search text" enterButton size="large" className="relative right-10" />
                 </div>
                 {userSession.userName === "shoreasg" ? "" : <div className="relative left-6">
-                    <Button type="link" onClick={handleDeleteAccount}>Delete Account</Button>
+                    <Button type="link" onClick={handleDeleteAccount}>Delete My Account</Button>
                 </div>}
                 <div className="relative left-6">
                     <Button type="link" onClick={handleLogOut}>Logout</Button>
