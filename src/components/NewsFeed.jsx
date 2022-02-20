@@ -3,14 +3,15 @@ import { AuthContext } from '../context/AuthContextProvider';
 import { Card, Avatar, List, Comment, Tooltip, Empty } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { toast } from 'react-toastify';
-import VirtualList from 'rc-virtual-list';
 import Linkify from 'linkify-react';
 import moment from 'moment';
 import Swal from 'sweetalert2'
 import axios from "axios";
+import UserComments from "./UserComments";
 
 const NewsFeed = ({ Feed, setUpdatedFeed }) => {
     const userSession = useContext(AuthContext)
+    console.log(Feed)
 
     const handleEdit = async (e) => {
 
@@ -107,49 +108,83 @@ const NewsFeed = ({ Feed, setUpdatedFeed }) => {
 
             })
     }
+    const handleCreate = (e) => {
+        Swal.fire({
+            title: "Enter your Comment!",
+            input: 'textarea',
+            showCancelButton: true,
+            inputValidator: (value) => {
+                if (!value) {
+                    return "Status Cannot be empty!"
+                }
+            }
+        }).then(async (result) => {
+            console.log(result)
+            if (result.isConfirmed) {
+                await axios.post(`${process.env.REACT_APP_DEV_BACKEND_URL}/CreateComment`,
+                    { userName: userSession.userName, twitchId: userSession.twitchId, profileImage: userSession.profileImage, comment: result.value, statusID: e.target.id }, { withCredentials: true }).then((res) => {
+                        toast.success(res.data, {
+                            position: "top-right",
+                            autoClose: 5000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: false,
+                            draggable: true,
+                            progress: undefined,
+                        });
+                        setUpdatedFeed(true)
+                    })
+            }
+        })
+    }
+
+
+
     return (
         <>
-            {Feed.length !== 0 ? <List className="w-3/4">
-                <VirtualList
-                    data={Feed}
-                    height={400}
-                    itemHeight={300}
-                    itemKey="id"
-                >
-                    {item => (
-                        <List.Item key={item._id}>
-                            <Card
-                                className="w-full"
+            {Feed.length !== 0 ? <List className="w-3/4"
+                dataSource={Feed}
+                renderItem={item => (
+                    <List.Item key={item._id}>
+                        <Card
+                            className="w-full"
 
-                            >
-                                <Comment
-                                    actions={
-                                        userSession.twitchId === item.twitchId ?
-                                            [
-                                                <EditOutlined key="edit" onClick={handleEdit} id={item._id} />,
-                                                <DeleteOutlined key="delete" onClick={handleDelete} id={item._id} />,
-                                            ] : ""}
-                                    author={item.userName}
-                                    avatar={<Avatar src={item.profileImage} />}
-                                    content={
-                                        <p>
-                                            <Linkify options={{ target: '_blank' }}><br />{item.status}</Linkify>
-                                        </p>
-                                    }
-                                    datetime={
-                                        item.createdAt === item.updatedAt ?
-                                            <Tooltip title={moment(item.createdAt).format('MMMM Do YYYY, h:mm:ss a')}>
-                                                <span>{moment(item.createdAt).startOf().fromNow()}</span>
-                                            </Tooltip> :
-                                            <Tooltip title={moment(item.createdAt).format('MMMM Do YYYY, h:mm:ss a')}>
-                                                <span>{moment(item.updatedAt).startOf().fromNow()} (Edited)</span>
-                                            </Tooltip>
-                                    } />
-                            </Card>
-                        </List.Item>
-                    )}
+                        >
+                            <Comment
+                                actions={
+                                    userSession.twitchId === item.twitchId ?
+                                        [
+                                            <EditOutlined key="edit" onClick={handleEdit} id={item._id} />,
+                                            <DeleteOutlined key="delete" onClick={handleDelete} id={item._id} />,
+                                            <span key="comment-basic-reply-to" onClick={handleCreate} id={item._id}>Reply to</span>
+                                        ] : [
+                                            <span key="comment-basic-reply-to" onClick={handleCreate} id={item._id}>Reply to</span>
+                                        ]}
+                                author={item.userName}
+                                avatar={<Avatar src={item.profileImage} />}
+                                content={
+                                    <p>
+                                        <Linkify options={{ target: '_blank' }}><br />{item.status}</Linkify>
+                                    </p>
+                                }
+                                datetime={
+                                    item.editedOn ?
+                                        <Tooltip title={moment(item.editedOn).format('MMMM Do YYYY, h:mm:ss a')}>
+                                            <span>{moment(item.editedOn).startOf().fromNow()} (Edited)</span>
+                                        </Tooltip>
+                                        : <Tooltip title={moment(item.createdAt).format('MMMM Do YYYY, h:mm:ss a')}>
+                                            <span>{moment(item.createdAt).startOf().fromNow()}</span>
+                                        </Tooltip>
 
-                </VirtualList>
+                                } />
+                            <UserComments comment={item.comment} setUpdatedFeed={setUpdatedFeed} />
+                        </Card>
+
+                    </List.Item>
+                )}>
+
+
+
             </List> : <Empty />}
 
         </>)
