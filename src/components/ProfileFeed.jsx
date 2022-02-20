@@ -166,9 +166,9 @@ const ProfileFeed = ({ ProfileFeed, setUpdatedFeed }) => {
                                         </p>
                                     }
                                     datetime={
-                                        item.createdAt === item.updatedAt ?
-                                            <Tooltip title={moment(item.createdAt).format('MMMM Do YYYY, h:mm:ss a')}>
-                                                <span>{moment(item.createdAt).startOf().fromNow()}</span>
+                                        item.editedOn ?
+                                            <Tooltip title={moment(item.editedOn).format('MMMM Do YYYY, h:mm:ss a')}>
+                                                <span>{moment(item.editedOn).startOf().fromNow()}</span>
                                             </Tooltip> :
                                             <Tooltip title={moment(item.createdAt).format('MMMM Do YYYY, h:mm:ss a')}>
                                                 <span>{moment(item.updatedAt).startOf().fromNow()} (Edited)</span>
