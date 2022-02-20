@@ -39,23 +39,21 @@ const Profile = () => {
         setUpdatedFeed(false)
     }, [UserProfile.id, id, UpdatedFeed]);
     return (
-        <Layout style={{ height: "100vh" }}>
+        <Layout>
             <Sider width="40%" className="relative flex flex-col items-center mt-1">
                 <FollowersList UserId={UserProfile.id} id={id} />
             </Sider>
             <Content className="flex flex-col items-center ">
-                <div className="flex flex-col items-center ">
-                    <Image
-                        width={100}
-                        src={UserProfile.profile_image_url}
-                        preview={{ src: `${UserProfile.profile_image_url}` }} />
-                    <Title level={2}>{UserProfile.display_name}</Title>
-                </div>
-                <div className="flex flex-col items-center w-3/4 h-2">
+                <Image
+                    width={100}
+                    src={UserProfile.profile_image_url}
+                    preview={{ src: `${UserProfile.profile_image_url}` }} />
+                <Title level={2}>{UserProfile.display_name}</Title>
+                <div className="flex flex-col items-center w-3/4">
                     {userSession.twitchId === UserProfile.id ? <PostStatus setUpdatedFeed={setUpdatedFeed} Loading={Loading} /> : ""}
 
                     <h1>News Feed</h1>
-                    {Loading ? <Spin size="large" tip={"Loading..."} /> : <ProfileFeed ProfileFeed={UserFeed} setUpdatedProfileFeed={setUpdatedFeed} />}
+                    {Loading ? <Spin size="large" tip={"Loading..."} /> : <ProfileFeed ProfileFeed={UserFeed} setUpdatedFeed={setUpdatedFeed} />}
                 </div>
 
             </Content>
