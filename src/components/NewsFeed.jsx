@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { AuthContext } from '../context/AuthContextProvider';
-import { Card, Avatar, List, Comment, Tooltip, Empty } from 'antd';
+import { Card, Avatar, List, Comment, Tooltip, Empty, Badge, Button } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { toast } from 'react-toastify';
 import Linkify from 'linkify-react';
@@ -11,8 +11,6 @@ import UserComments from "./UserComments";
 
 const NewsFeed = ({ Feed, setUpdatedFeed }) => {
     const userSession = useContext(AuthContext)
-    console.log(Feed)
-
     const handleEdit = async (e) => {
 
         await axios.get(`${process.env.REACT_APP_DEV_BACKEND_URL}/GetPost/${e.currentTarget.id}`, { withCredentials: true })
@@ -108,8 +106,8 @@ const NewsFeed = ({ Feed, setUpdatedFeed }) => {
 
             })
     }
-    const handleCreate = (e) => {
-        Swal.fire({
+    const handleCreate = async (e) => {
+        await Swal.fire({
             title: "Enter your Comment!",
             input: 'textarea',
             showCancelButton: true,
@@ -138,7 +136,18 @@ const NewsFeed = ({ Feed, setUpdatedFeed }) => {
         })
     }
 
-
+    const handleUpdateLULCount = async (e) => {
+        await axios.put(`${process.env.REACT_APP_DEV_BACKEND_URL}/LUL/${e.currentTarget.id}`, { twitchId: userSession.twitchId }, { withCredentials: true })
+        setUpdatedFeed(true)
+    }
+    const handleUpdateGOODCount = async (e) => {
+        await axios.put(`${process.env.REACT_APP_DEV_BACKEND_URL}/GOOD/${e.currentTarget.id}`, { twitchId: userSession.twitchId }, { withCredentials: true })
+        setUpdatedFeed(true)
+    }
+    const handleUpdateKAPPACount = async (e) => {
+        await axios.put(`${process.env.REACT_APP_DEV_BACKEND_URL}/KAPPA/${e.currentTarget.id}`, { twitchId: userSession.twitchId }, { withCredentials: true })
+        setUpdatedFeed(true)
+    }
 
     return (
         <>
@@ -154,17 +163,26 @@ const NewsFeed = ({ Feed, setUpdatedFeed }) => {
                                 actions={
                                     userSession.twitchId === item.twitchId ?
                                         [
+                                            <span key="comment-basic-reply-to" onClick={handleCreate} id={item._id}>Comment</span>,
+                                            <a onClick={handleUpdateLULCount} id={item._id}><Badge count={item.lul.length} size={"small"} offset={[0,2]}><Avatar  size={"small"} src={"https://static-cdn.jtvnw.net/emoticons/v2/425618/static/light/1.0"} /></Badge></a>,
+                                            <a onClick={handleUpdateGOODCount} id={item._id}><Badge count={item.good.length} size={"small"} offset={[0,2]}><Avatar size={"small"} src={"https://static-cdn.jtvnw.net/emoticons/v2/64138/static/light/1.0"} /></Badge></a>,
+                                            <a onClick={handleUpdateKAPPACount} id={item._id}><Badge count={item.kappa.length} size={"small"} offset={[0,2]}><Avatar size={"small"} src={"https://static-cdn.jtvnw.net/emoticons/v2/25/static/light/1.0"} /></Badge></a>,
                                             <EditOutlined key="edit" onClick={handleEdit} id={item._id} />,
                                             <DeleteOutlined key="delete" onClick={handleDelete} id={item._id} />,
-                                            <span key="comment-basic-reply-to" onClick={handleCreate} id={item._id}>Reply to</span>
+                                      
+
                                         ] : [
-                                            <span key="comment-basic-reply-to" onClick={handleCreate} id={item._id}>Reply to</span>
+                                            <span key="comment-basic-reply-to" onClick={handleCreate} id={item._id}>Comment</span>,
+                                            <a onClick={handleUpdateLULCount} id={item._id}><Badge count={item.lul.length} size={"small"} offset={[0,2]}><Avatar  size={"small"} src={"https://static-cdn.jtvnw.net/emoticons/v2/425618/static/light/1.0"} /></Badge></a>,
+                                            <a onClick={handleUpdateGOODCount} id={item._id}><Badge count={item.good.length} size={"small"} offset={[0,2]}><Avatar size={"small"} src={"https://static-cdn.jtvnw.net/emoticons/v2/64138/static/light/1.0"} /></Badge></a>,
+                                            <a onClick={handleUpdateKAPPACount} id={item._id}><Badge count={item.kappa.length} size={"small"} offset={[0,2]}><Avatar size={"small"} src={"https://static-cdn.jtvnw.net/emoticons/v2/25/static/light/1.0"} /></Badge></a>,
                                         ]}
                                 author={item.userName}
                                 avatar={<Avatar src={item.profileImage} />}
                                 content={
                                     <p>
                                         <Linkify options={{ target: '_blank' }}><br />{item.status}</Linkify>
+
                                     </p>
                                 }
                                 datetime={
@@ -177,6 +195,7 @@ const NewsFeed = ({ Feed, setUpdatedFeed }) => {
                                         </Tooltip>
 
                                 } />
+
                             <UserComments comment={item.comment} setUpdatedFeed={setUpdatedFeed} />
                         </Card>
 

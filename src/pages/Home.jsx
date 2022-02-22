@@ -26,6 +26,7 @@ const Home = () => {
     }
 
 
+
     const getFollowedChannels = async () => {
         const FollowedChannels = await axios.get(`${process.env.REACT_APP_DEV_BACKEND_URL}/GetFollowedChannels`, { withCredentials: true })
         setGetLiveChannels([...FollowedChannels.data.data])
@@ -43,6 +44,8 @@ const Home = () => {
 
 
     useEffect(() => {
+
+
         getFollowedChannels()
         getUserVideos()
         getUserClips()

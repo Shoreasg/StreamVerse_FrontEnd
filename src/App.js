@@ -36,7 +36,7 @@ const App = () => {
           <Route path="faq" element={<Faq />} />
           <Route path="*" element={<Navigate to="/register" />} />
         </Routes>
-        <PageFooter />
+        
       </>}
   </div>
   );

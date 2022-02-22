@@ -1,4 +1,4 @@
-import { Card, Avatar, Comment, Tooltip } from 'antd';
+import { Card, Avatar, Comment, Tooltip, Badge } from 'antd';
 import React, { useContext } from "react";
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { AuthContext } from '../context/AuthContextProvider';
@@ -11,6 +11,8 @@ import axios from "axios";
 
 const UserComments = ({ comment, setUpdatedFeed }) => {
     const userSession = useContext(AuthContext)
+    console.log(userSession)
+    console.log(comment)
 
     const handleEdit = async (e) => {
 
@@ -106,10 +108,21 @@ const UserComments = ({ comment, setUpdatedFeed }) => {
 
             })
     }
-
+    const handleUpdateLULCount = async (e) => {
+        await axios.put(`${process.env.REACT_APP_DEV_BACKEND_URL}/LULComment/${e.currentTarget.id}`, { twitchId: userSession.twitchId }, { withCredentials: true })
+        setUpdatedFeed(true)
+    }
+    const handleUpdateGOODCount = async (e) => {
+        await axios.put(`${process.env.REACT_APP_DEV_BACKEND_URL}/GOODComment/${e.currentTarget.id}`, { twitchId: userSession.twitchId }, { withCredentials: true })
+        setUpdatedFeed(true)
+    }
+    const handleUpdateKAPPACount = async (e) => {
+        await axios.put(`${process.env.REACT_APP_DEV_BACKEND_URL}/KAPPAComment/${e.currentTarget.id}`, { twitchId: userSession.twitchId }, { withCredentials: true })
+        setUpdatedFeed(true)
+    }
     const mapComments = comment.map((data) => {
         return (<>
-            <Card
+            {userSession.followers.includes(data.twitchId) ? <Card
                 className="w-full"
 
             >
@@ -117,9 +130,16 @@ const UserComments = ({ comment, setUpdatedFeed }) => {
                     actions={
                         userSession.twitchId === data.twitchId ?
                             [
+                                <a onClick={handleUpdateLULCount} id={data._id}><Badge count={data.lul.length} size={"small"} offset={[0, 2]}><Avatar size={"small"} src={"https://static-cdn.jtvnw.net/emoticons/v2/425618/static/light/1.0"} /></Badge></a>,
+                                <a onClick={handleUpdateGOODCount} id={data._id}><Badge count={data.good.length} size={"small"} offset={[0, 2]}><Avatar size={"small"} src={"https://static-cdn.jtvnw.net/emoticons/v2/64138/static/light/1.0"} /></Badge></a>,
+                                <a onClick={handleUpdateKAPPACount} id={data._id}><Badge count={data.kappa.length} size={"small"} offset={[0, 2]}><Avatar size={"small"} src={"https://static-cdn.jtvnw.net/emoticons/v2/25/static/light/1.0"} /></Badge></a>,
                                 <EditOutlined key="edit" onClick={handleEdit} id={data._id} />,
                                 <DeleteOutlined key="delete" onClick={handleDelete} id={data._id} />,
-                            ] : ""}
+                            ] : [
+                                <a onClick={handleUpdateLULCount} id={data._id}><Badge count={data.lul.length} size={"small"} offset={[0, 2]}><Avatar size={"small"} src={"https://static-cdn.jtvnw.net/emoticons/v2/425618/static/light/1.0"} /></Badge></a>,
+                                <a onClick={handleUpdateGOODCount} id={data._id}><Badge count={data.good.length} size={"small"} offset={[0, 2]}><Avatar size={"small"} src={"https://static-cdn.jtvnw.net/emoticons/v2/64138/static/light/1.0"} /></Badge></a>,
+                                <a onClick={handleUpdateKAPPACount} id={data._id}><Badge count={data.kappa.length} size={"small"} offset={[0, 2]}><Avatar size={"small"} src={"https://static-cdn.jtvnw.net/emoticons/v2/25/static/light/1.0"} /></Badge></a>,
+                            ]}
                     author={`${data.userName} commented`}
                     avatar={<Avatar src={data.profileImage} />}
                     content={
@@ -136,7 +156,8 @@ const UserComments = ({ comment, setUpdatedFeed }) => {
                                 <span>{moment(data.updatedAt).startOf().fromNow()} (Edited)</span>
                             </Tooltip>
                     } />
-            </Card>
+            </Card> : ""}
+
         </>)
     })
 
