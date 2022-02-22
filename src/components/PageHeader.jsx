@@ -41,25 +41,38 @@ const PageHeader = () => {
     }
     return (
         <Header>
-            <div className="flex flex-row">
-                <div className="relative right-4">
-                    <Button type="link" onClick={() => navigate("/home")}>Home</Button></div>
-                <div className="relative right-4">
-                    <Button type="link" onClick={() => navigate(`/profile/${userSession.userName}`)}>Profile</Button>
-                </div>
-                {userSession.userName === "shoreasg" ? <div className="relative right-4">
-                    <Button type="link" onClick={() => navigate(`/dashboard/`)}>Dashboard</Button>
-                </div> : ""}
-                <div className="flex items-center mx-auto relative left-20">
-                    <Search placeholder="input search text" enterButton size="large" className="relative right-10" />
-                </div>
-                {userSession.userName === "shoreasg" ? "" : <div className="relative left-6">
-                    <Button type="link" onClick={handleDeleteAccount}>Delete My Account</Button>
+            {userSession.userName === "shoreasg" ?
+                <div className="flex flex-row">
+                    <div className="relative right-4">
+                        <Button type="link" onClick={() => navigate("/home")}>Home</Button></div>
+                    <div className="relative right-4">
+                        <Button type="link" onClick={() => navigate(`/profile/${userSession.userName}`)}>Profile</Button>
+                    </div>
+                    <div className="relative right-4">
+                        <Button type="link" onClick={() => navigate(`/dashboard/`)}>Dashboard</Button>
+                    </div>
+                    <div className="flex items-center mx-auto">
+                        <Search placeholder="input search text" enterButton size="large" className="relative right-20" />
+                    </div>
+                    <div className="relative left-6">
+                        <Button type="link" onClick={handleLogOut}>Logout</Button>
+                    </div>
+                </div> : <div className="flex flex-row">
+                    <div className="relative right-4">
+                        <Button type="link" onClick={() => navigate("/home")}>Home</Button></div>
+                    <div className="relative right-4">
+                        <Button type="link" onClick={() => navigate(`/profile/${userSession.userName}`)}>Profile</Button>
+                    </div>
+                    <div className="flex items-center mx-auto">
+                        <Search placeholder="input search text" enterButton size="large" className="relative left-10" />
+                    </div>
+                    <div className="relative left-6">
+                        <Button type="link" onClick={handleDeleteAccount}>Delete My Account</Button>
+                    </div>
+                    <div className="relative left-6">
+                        <Button type="link" onClick={handleLogOut}>Logout</Button>
+                    </div>
                 </div>}
-                <div className="relative left-6">
-                    <Button type="link" onClick={handleLogOut}>Logout</Button>
-                </div>
-            </div>
         </Header>
     )
 }
