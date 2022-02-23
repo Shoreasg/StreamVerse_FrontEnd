@@ -7,7 +7,6 @@ import Linkify from 'linkify-react';
 import moment from 'moment';
 import Swal from 'sweetalert2'
 import axios from "axios";
-import ReactPlayer from 'react-player'
 import UserComments from "./UserComments";
 
 const NewsFeed = ({ Feed, setUpdatedFeed }) => {

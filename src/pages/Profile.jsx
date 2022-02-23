@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import PostStatus from "../components/PostStatus";
 import axios from "axios";
-import { Layout, Image, Spin, Typography, Empty } from 'antd';
+import { Layout, Image, Typography, Empty } from 'antd';
 import ProfileFeed from "../components/ProfileFeed";
 import { useParams } from "react-router";
 import FollowersList from "../components/FollowerList";

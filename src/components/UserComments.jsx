@@ -149,7 +149,7 @@ const UserComments = ({ comment, setUpdatedFeed }) => {
                             <Tooltip title={moment(data.createdAt).format('MMMM Do YYYY, h:mm:ss a')}>
                                 <span>{moment(data.createdAt).startOf().fromNow()}</span>
                             </Tooltip> :
-                            <Tooltip title={moment(data.createdAt).format('MMMM Do YYYY, h:mm:ss a')}>
+                            <Tooltip title={moment(data.updatedAt).format('MMMM Do YYYY, h:mm:ss a')}>
                                 <span>{moment(data.updatedAt).startOf().fromNow()} (Edited)</span>
                             </Tooltip>
                     } />
