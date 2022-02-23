@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Button, Layout, Input } from 'antd';
 import axios from "axios";
 import { useNavigate } from "react-router-dom"
@@ -9,6 +9,7 @@ const { Search } = Input;
 
 const PageHeader = () => {
     let navigate = useNavigate();
+    const [inputValue, setInputValue] = useState("");
     const userSession = useContext(AuthContext)
 
 
@@ -39,6 +40,10 @@ const PageHeader = () => {
             }
         })
     }
+    const handleOnSearch = (searchValue) => {
+        navigate(`/profile/${searchValue}`)
+        setInputValue('')
+    }
     return (
         <Header>
             {userSession.userName === "shoreasg" ?
@@ -52,7 +57,7 @@ const PageHeader = () => {
                         <Button type="link" onClick={() => navigate(`/dashboard/`)}>Dashboard</Button>
                     </div>
                     <div className="flex items-center mx-auto">
-                        <Search placeholder="input search text" enterButton size="large" className="relative right-20" />
+                        <Search placeholder="input search text" enterButton size="large" className="relative right-20" onSearch={handleOnSearch} allowClear value={inputValue} onChange={(e) => setInputValue(e.target.value)} />
                     </div>
                     <div className="relative left-6">
                         <Button type="link" onClick={handleLogOut}>Logout</Button>

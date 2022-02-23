@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 import { toast } from 'react-toastify';
 import { Button, Input, Form, Card, Comment, Avatar } from 'antd';
 import { AuthContext } from '../context/AuthContextProvider';
@@ -7,7 +7,7 @@ const { TextArea } = Input;
 
 
 
-const PostStatus = ({ setUpdatedFeed,Loading }) => {
+const PostStatus = ({ setUpdatedFeed, Loading }) => {
     const userSession = useContext(AuthContext)
     const [form] = Form.useForm();
 

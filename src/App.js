@@ -15,7 +15,6 @@ import PageFooter from './components/PageFooter';
 const App = () => {
 
   const userSession = useContext(AuthContext)
-  console.log(userSession)
 
   return (<div className="App">
     <ToastContainer />
@@ -36,7 +35,7 @@ const App = () => {
           <Route path="faq" element={<Faq />} />
           <Route path="*" element={<Navigate to="/register" />} />
         </Routes>
-        
+
       </>}
   </div>
   );

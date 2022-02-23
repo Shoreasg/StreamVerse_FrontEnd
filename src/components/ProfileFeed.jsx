@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import { Card, Avatar, List, Comment, Tooltip, Empty, Badge } from 'antd';
+import React, { useContext, useEffect, useState } from "react";
+import { Card, Avatar, List, Comment, Tooltip, Empty, Badge, Spin } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { AuthContext } from '../context/AuthContextProvider';
 import UserComments from "./UserComments";
@@ -9,9 +9,21 @@ import moment from 'moment';
 import Swal from 'sweetalert2'
 import axios from "axios";
 
-const ProfileFeed = ({ ProfileFeed, setUpdatedFeed }) => {
+const ProfileFeed = ({ UserProfile, setUpdatedFeed, UpdatedFeed }) => {
     const userSession = useContext(AuthContext)
-    console.log(ProfileFeed)
+    const [Loading, setLoading] = useState(true);
+    const [UserFeed, setUserFeed] = useState([]);
+
+    const getProfileFeed = async () => {
+
+        const ProfileFeed = await axios.get(`${process.env.REACT_APP_DEV_BACKEND_URL}/GetUserFeed/${UserProfile}`, { withCredentials: true })
+        setUserFeed(ProfileFeed.data)
+        setLoading(false)
+    }
+    useEffect(() => {
+        getProfileFeed()
+        setLoading(true)
+    }, [UserProfile, UpdatedFeed]);
     const handleEdit = async (e) => {
 
         await axios.get(`${process.env.REACT_APP_DEV_BACKEND_URL}/GetPost/${e.currentTarget.id}`, { withCredentials: true })
@@ -31,7 +43,6 @@ const ProfileFeed = ({ ProfileFeed, setUpdatedFeed }) => {
                         await axios.put(`${process.env.REACT_APP_DEV_BACKEND_URL}/EditPost/${res.data._id}`,
                             { status: result.value }
                             , { withCredentials: true }).then((res) => {
-                                console.log(res)
                                 toast.success(res.data, {
                                     position: "top-right",
                                     autoClose: 5000,
@@ -75,7 +86,6 @@ const ProfileFeed = ({ ProfileFeed, setUpdatedFeed }) => {
                     confirmButtonText: 'Yes, delete it!'
                 }).then(async (result) => {
                     if (result.isConfirmed) {
-                        console.log(result.value)
                         await axios.delete(`${process.env.REACT_APP_DEV_BACKEND_URL}/DeletePost/${res.data._id}`,
                             { withCredentials: true }).then((res) => {
                                 toast.success(res.data, {
@@ -118,7 +128,6 @@ const ProfileFeed = ({ ProfileFeed, setUpdatedFeed }) => {
                 }
             }
         }).then(async (result) => {
-            console.log(result)
             if (result.isConfirmed) {
                 await axios.post(`${process.env.REACT_APP_DEV_BACKEND_URL}/CreateComment`,
                     { userName: userSession.userName, twitchId: userSession.twitchId, profileImage: userSession.profileImage, comment: result.value, statusID: e.target.id }, { withCredentials: true }).then((res) => {
@@ -151,9 +160,9 @@ const ProfileFeed = ({ ProfileFeed, setUpdatedFeed }) => {
 
     return (
         <>
-            {ProfileFeed.length !== 0 ?
+            {Loading ? <Spin size="large" tip={"Loading..."} /> : UserFeed.length !== 0 ?
                 <List className="w-3/4"
-                    dataSource={ProfileFeed}
+                    dataSource={UserFeed}
                     renderItem={item => (
 
                         <List.Item key={item._id}>
@@ -170,7 +179,7 @@ const ProfileFeed = ({ ProfileFeed, setUpdatedFeed }) => {
                                                 <a onClick={handleUpdateKAPPACount} id={item._id}><Badge count={item.kappa.length} size={"small"} offset={[0, 2]}><Avatar size={"small"} src={"https://static-cdn.jtvnw.net/emoticons/v2/25/static/light/1.0"} /></Badge></a>,
                                                 <EditOutlined key="edit" onClick={handleEdit} id={item._id} />,
                                                 <DeleteOutlined key="delete" onClick={handleDelete} id={item._id} />
-                                           
+
                                             ] : [
                                                 <span key="comment-basic-reply-to" onClick={handleCreate} id={item._id}>Comment</span>,
                                                 <a onClick={handleUpdateLULCount} id={item._id}><Badge count={item.lul.length} size={"small"} offset={[0, 2]}><Avatar size={"small"} src={"https://static-cdn.jtvnw.net/emoticons/v2/425618/static/light/1.0"} /></Badge></a>,
@@ -198,9 +207,6 @@ const ProfileFeed = ({ ProfileFeed, setUpdatedFeed }) => {
 
                         </List.Item>
                     )}>
-
-
-
                 </List> : <Empty />}
         </>
     )

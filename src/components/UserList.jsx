@@ -1,4 +1,4 @@
-import React,{useContext} from "react";
+import React, { useContext } from "react";
 import { Card, Avatar, List } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import { toast } from 'react-toastify';
@@ -12,8 +12,7 @@ const { Meta } = Card;
 
 const UserList = ({ GetAllUser, setUpdatedFeed }) => {
     const userSession = useContext(AuthContext)
-    console.log(GetAllUser)
-    console.log(userSession.twitchId)
+
     const handleDelete = (e) => {
 
         axios.get(`${process.env.REACT_APP_DEV_BACKEND_URL}/AllUser/${e.currentTarget.id}`, { withCredentials: true })
@@ -28,11 +27,9 @@ const UserList = ({ GetAllUser, setUpdatedFeed }) => {
                     confirmButtonText: 'Yes, delete it!'
                 }).then(async (result) => {
                     if (result.isConfirmed) {
-                        console.log(result.value)
                         await axios.delete(`${process.env.REACT_APP_DEV_BACKEND_URL}/DeleteUser/${res.data.twitchId}`,
                             { withCredentials: true }).then((res) => {
-                                if(res.status === 200)
-                                {
+                                if (res.status === 200) {
                                     toast.success(res.data, {
                                         position: "top-right",
                                         autoClose: 5000,
@@ -44,7 +41,7 @@ const UserList = ({ GetAllUser, setUpdatedFeed }) => {
                                     });
                                     setUpdatedFeed(true)
                                 }
-                               
+
                             })
                     }
                 }).catch((err) => {
@@ -79,14 +76,14 @@ const UserList = ({ GetAllUser, setUpdatedFeed }) => {
                             className="w-full"
                             actions={
                                 userSession.twitchId !== item.twitchId ?
-                                [
-                                    
-                                    <DeleteOutlined key="delete" onClick={handleDelete} id={item.twitchId} />
-                                ]:""}
+                                    [
+
+                                        <DeleteOutlined key="delete" onClick={handleDelete} id={item.twitchId} />
+                                    ] : ""}
 
                         >
                             <Meta
-                                avatar={<Avatar src={item.profileImage}/>}
+                                avatar={<Avatar src={item.profileImage} />}
                                 title={item.userName}
                                 description={`Created on: ${moment(item.createdAt).format('MMMM Do YYYY')}`}
                             />
