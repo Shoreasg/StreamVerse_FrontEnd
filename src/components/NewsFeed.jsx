@@ -1,12 +1,13 @@
 import React, { useContext } from "react";
 import { AuthContext } from '../context/AuthContextProvider';
-import { Card, Avatar, List, Comment, Tooltip, Empty, Badge, Button } from 'antd';
+import { Card, Avatar, List, Comment, Tooltip, Empty, Badge } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { toast } from 'react-toastify';
 import Linkify from 'linkify-react';
 import moment from 'moment';
 import Swal from 'sweetalert2'
 import axios from "axios";
+import ReactPlayer from 'react-player'
 import UserComments from "./UserComments";
 
 const NewsFeed = ({ Feed, setUpdatedFeed }) => {
@@ -30,7 +31,6 @@ const NewsFeed = ({ Feed, setUpdatedFeed }) => {
                         await axios.put(`${process.env.REACT_APP_DEV_BACKEND_URL}/EditPost/${res.data._id}`,
                             { status: result.value }
                             , { withCredentials: true }).then((res) => {
-                                console.log(res)
                                 toast.success(res.data, {
                                     position: "top-right",
                                     autoClose: 5000,
@@ -74,7 +74,6 @@ const NewsFeed = ({ Feed, setUpdatedFeed }) => {
                     confirmButtonText: 'Yes, delete it!'
                 }).then(async (result) => {
                     if (result.isConfirmed) {
-                        console.log(result.value)
                         await axios.delete(`${process.env.REACT_APP_DEV_BACKEND_URL}/DeletePost/${res.data._id}`,
                             { withCredentials: true }).then((res) => {
                                 toast.success(res.data, {
@@ -117,7 +116,6 @@ const NewsFeed = ({ Feed, setUpdatedFeed }) => {
                 }
             }
         }).then(async (result) => {
-            console.log(result)
             if (result.isConfirmed) {
                 await axios.post(`${process.env.REACT_APP_DEV_BACKEND_URL}/CreateComment`,
                     { userName: userSession.userName, twitchId: userSession.twitchId, profileImage: userSession.profileImage, comment: result.value, statusID: e.target.id }, { withCredentials: true }).then((res) => {
@@ -164,26 +162,25 @@ const NewsFeed = ({ Feed, setUpdatedFeed }) => {
                                     userSession.twitchId === item.twitchId ?
                                         [
                                             <span key="comment-basic-reply-to" onClick={handleCreate} id={item._id}>Comment</span>,
-                                            <a onClick={handleUpdateLULCount} id={item._id}><Badge count={item.lul.length} size={"small"} offset={[0,2]}><Avatar  size={"small"} src={"https://static-cdn.jtvnw.net/emoticons/v2/425618/static/light/1.0"} /></Badge></a>,
-                                            <a onClick={handleUpdateGOODCount} id={item._id}><Badge count={item.good.length} size={"small"} offset={[0,2]}><Avatar size={"small"} src={"https://static-cdn.jtvnw.net/emoticons/v2/64138/static/light/1.0"} /></Badge></a>,
-                                            <a onClick={handleUpdateKAPPACount} id={item._id}><Badge count={item.kappa.length} size={"small"} offset={[0,2]}><Avatar size={"small"} src={"https://static-cdn.jtvnw.net/emoticons/v2/25/static/light/1.0"} /></Badge></a>,
+                                            <a onClick={handleUpdateLULCount} id={item._id}><Badge count={item.lul.length} size={"small"} offset={[0, 2]}><Avatar size={"small"} src={"https://static-cdn.jtvnw.net/emoticons/v2/425618/static/light/1.0"} /></Badge></a>,
+                                            <a onClick={handleUpdateGOODCount} id={item._id}><Badge count={item.good.length} size={"small"} offset={[0, 2]}><Avatar size={"small"} src={"https://static-cdn.jtvnw.net/emoticons/v2/64138/static/light/1.0"} /></Badge></a>,
+                                            <a onClick={handleUpdateKAPPACount} id={item._id}><Badge count={item.kappa.length} size={"small"} offset={[0, 2]}><Avatar size={"small"} src={"https://static-cdn.jtvnw.net/emoticons/v2/25/static/light/1.0"} /></Badge></a>,
                                             <EditOutlined key="edit" onClick={handleEdit} id={item._id} />,
                                             <DeleteOutlined key="delete" onClick={handleDelete} id={item._id} />,
-                                      
+
 
                                         ] : [
                                             <span key="comment-basic-reply-to" onClick={handleCreate} id={item._id}>Comment</span>,
-                                            <a onClick={handleUpdateLULCount} id={item._id}><Badge count={item.lul.length} size={"small"} offset={[0,2]}><Avatar  size={"small"} src={"https://static-cdn.jtvnw.net/emoticons/v2/425618/static/light/1.0"} /></Badge></a>,
-                                            <a onClick={handleUpdateGOODCount} id={item._id}><Badge count={item.good.length} size={"small"} offset={[0,2]}><Avatar size={"small"} src={"https://static-cdn.jtvnw.net/emoticons/v2/64138/static/light/1.0"} /></Badge></a>,
-                                            <a onClick={handleUpdateKAPPACount} id={item._id}><Badge count={item.kappa.length} size={"small"} offset={[0,2]}><Avatar size={"small"} src={"https://static-cdn.jtvnw.net/emoticons/v2/25/static/light/1.0"} /></Badge></a>,
+                                            <a onClick={handleUpdateLULCount} id={item._id}><Badge count={item.lul.length} size={"small"} offset={[0, 2]}><Avatar size={"small"} src={"https://static-cdn.jtvnw.net/emoticons/v2/425618/static/light/1.0"} /></Badge></a>,
+                                            <a onClick={handleUpdateGOODCount} id={item._id}><Badge count={item.good.length} size={"small"} offset={[0, 2]}><Avatar size={"small"} src={"https://static-cdn.jtvnw.net/emoticons/v2/64138/static/light/1.0"} /></Badge></a>,
+                                            <a onClick={handleUpdateKAPPACount} id={item._id}><Badge count={item.kappa.length} size={"small"} offset={[0, 2]}><Avatar size={"small"} src={"https://static-cdn.jtvnw.net/emoticons/v2/25/static/light/1.0"} /></Badge></a>,
                                         ]}
                                 author={item.userName}
                                 avatar={<Avatar src={item.profileImage} />}
                                 content={
-                                    <p>
-                                        <Linkify options={{ target: '_blank' }}><br />{item.status}</Linkify>
 
-                                    </p>
+                                    <Linkify tagName={"p"} options={{ target: '_blank' }}><br />{item.status}</Linkify>
+
                                 }
                                 datetime={
                                     item.editedOn ?

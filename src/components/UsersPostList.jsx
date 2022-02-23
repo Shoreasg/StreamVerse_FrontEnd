@@ -11,7 +11,6 @@ const { Paragraph } = Typography;
 
 
 const UsersPostList = ({ GetAllFeed, setUpdatedFeed }) => {
-    console.log(GetAllFeed)
     const handleDelete = (e) => {
 
         axios.get(`${process.env.REACT_APP_DEV_BACKEND_URL}/GetPost/${e.currentTarget.id}`, { withCredentials: true })
@@ -26,11 +25,9 @@ const UsersPostList = ({ GetAllFeed, setUpdatedFeed }) => {
                     confirmButtonText: 'Yes, delete it!'
                 }).then(async (result) => {
                     if (result.isConfirmed) {
-                        console.log(result.value)
                         await axios.delete(`${process.env.REACT_APP_DEV_BACKEND_URL}/DeletePost/${res.data._id}`,
                             { withCredentials: true }).then((res) => {
-                                if(res.status === 200)
-                                {
+                                if (res.status === 200) {
                                     toast.success(res.data, {
                                         position: "top-right",
                                         autoClose: 5000,
@@ -42,7 +39,7 @@ const UsersPostList = ({ GetAllFeed, setUpdatedFeed }) => {
                                     });
                                     setUpdatedFeed(true)
                                 }
-                                
+
                             })
                     }
                 }).catch((err) => {
@@ -64,7 +61,7 @@ const UsersPostList = ({ GetAllFeed, setUpdatedFeed }) => {
     }
     return (
         <>
-        {GetAllFeed.length !==0 ?   <List style={{ width: "50%" }}>
+            {GetAllFeed.length !== 0 ? <List style={{ width: "50%" }}>
                 <VirtualList
                     data={GetAllFeed}
                     height={810}
@@ -119,8 +116,8 @@ const UsersPostList = ({ GetAllFeed, setUpdatedFeed }) => {
                     )}
 
                 </VirtualList>
-            </List>:<Empty/>}
-          
+            </List> : <Empty />}
+
         </>)
 };
 

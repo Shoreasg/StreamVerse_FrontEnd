@@ -11,8 +11,6 @@ import axios from "axios";
 
 const UserComments = ({ comment, setUpdatedFeed }) => {
     const userSession = useContext(AuthContext)
-    console.log(userSession)
-    console.log(comment)
 
     const handleEdit = async (e) => {
 
@@ -33,7 +31,6 @@ const UserComments = ({ comment, setUpdatedFeed }) => {
                         await axios.put(`${process.env.REACT_APP_DEV_BACKEND_URL}/EditComment/${res.data._id}`,
                             { comment: result.value }
                             , { withCredentials: true }).then((res) => {
-                                console.log(res)
                                 toast.success(res.data, {
                                     position: "top-right",
                                     autoClose: 5000,
@@ -122,7 +119,7 @@ const UserComments = ({ comment, setUpdatedFeed }) => {
     }
     const mapComments = comment.map((data) => {
         return (<>
-            {userSession.followers.includes(data.twitchId) ? <Card
+            {userSession.followers.includes(data.twitchId) || userSession.twitchId === data.twitchId ? <Card
                 className="w-full"
 
             >

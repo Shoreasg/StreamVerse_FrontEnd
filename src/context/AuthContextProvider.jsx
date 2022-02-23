@@ -13,11 +13,10 @@ const AuthContextProvider = (props) => {
 			setUserSession(User.data);
 
 		}
-		const getFollowers = async () =>
-		{
-			 await axios
-			.get(`${process.env.REACT_APP_DEV_BACKEND_URL}/GetFollowers`, { withCredentials: true })
-		} 
+		const getFollowers = async () => {
+			await axios
+				.get(`${process.env.REACT_APP_DEV_BACKEND_URL}/GetFollowers`, { withCredentials: true })
+		}
 		getUser()
 		getFollowers()
 	}, []);
