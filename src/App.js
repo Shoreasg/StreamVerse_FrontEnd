@@ -18,9 +18,16 @@ const App = () => {
 
   return (<div className="App">
     <ToastContainer />
-    {userSession ?
+    {!userSession ?
       <>
-        <PageHeader />
+       <Routes>
+          <Route path="register" element={<Register />} />
+          <Route path="faq" element={<Faq />} />
+          <Route path="*" element={<Navigate to="/register" />} />
+        </Routes>
+      </> :
+      <>
+       <PageHeader />
         <Routes>
           <Route path="home" element={<Home />} />
           <Route path="Dashboard" element={<Dashboard />} />
@@ -28,13 +35,7 @@ const App = () => {
           <Route path="*" element={<Navigate to="/home" />} />
         </Routes>
         <PageFooter />
-      </> :
-      <>
-        <Routes>
-          <Route path="register" element={<Register />} />
-          <Route path="faq" element={<Faq />} />
-          <Route path="*" element={<Navigate to="/register" />} />
-        </Routes>
+        
 
       </>}
   </div>
