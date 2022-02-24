@@ -30,6 +30,32 @@ There are many streamers in in the world, however there is no platform that acts
 
 # Screenshots:
 
+## Login Page
+
+![Login Page](https://raw.githubusercontent.com/Shoreasg/StreamVerse_FrontEnd/main/screenshots/Login_Page.JPG)
+
+## FAQ Page
+
+![FAQ Page](https://raw.githubusercontent.com/Shoreasg/StreamVerse_FrontEnd/main/screenshots/FAQ_Page.JPG)
+
+## Home Page
+
+![Home Page](https://raw.githubusercontent.com/Shoreasg/StreamVerse_FrontEnd/main/screenshots/Home_Page.JPG)
+
+## Admin Page
+
+
+![Admin Page](https://raw.githubusercontent.com/Shoreasg/StreamVerse_FrontEnd/main/screenshots/Admin_Page.JPG)
+
+## Profile Page
+
+
+![Admin Page](https://raw.githubusercontent.com/Shoreasg/StreamVerse_FrontEnd/main/screenshots/Profile_Page.JPG)
+
+## Comment/Like
+
+
+![Comment/Like](https://raw.githubusercontent.com/Shoreasg/StreamVerse_FrontEnd/main/screenshots/Comments_Likes.JPG)
 
 # Technologies used
 
