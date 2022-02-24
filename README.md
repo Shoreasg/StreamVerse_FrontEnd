@@ -1,70 +1,81 @@
-# Getting Started with Create React App
+# GA - Final Project
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Demo Links
+[Frontend](https://streamverse-fe.herokuapp.com/home)
 
-## Available Scripts
+[Backend](https://streamverse-be.herokuapp.com/)
 
-In the project directory, you can run:
 
-### `npm start`
+## Repositories
+[Front Repo](https://github.com/Shoreasg/StreamVerse_FrontEnd)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+[Backend Repo](https://github.com/Shoreasg/StreamVerse_Backend)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `npm test`
+# Introduction
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+There are many streamers in in the world, however there is no platform that acts like a social media just for streamers only. StreamVerse was created with the idea of trying to unite all streamers together by having a social platform to post their latest updates, clips and highlights!
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+# Features:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- User is able to login using twitch 
+- User is able to see channels that he/she is following when they are live
+- User is able to post/like/comment on users status
+- User is able to see the list of user he/she is following and the followers that he/she has in the profile page
+- User is able to search for exisiting twitch users
+- Admin is able to delete post and delete users
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+# Screenshots:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+# Technologies used
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
+## Front-End
+- [Tailwindcss](https://tailwindcss.com/docs/guides/create-react-app)
+- [React](https://reactjs.org/)
+- [Ant Design](https://ant.design/)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Back-End
+- [Node.js](https://nodejs.org/en/)
+- [Express](http://expressjs.com/)
+- [Mongoose](https://mongoosejs.com/)
 
-### Code Splitting
+## Node Modules used
+- [axios](https://axios-http.com/)
+- [moment](https://momentjs.com/)
+- [react-icons](https://react-icons.github.io/react-icons/)
+- [react-router](https://reactrouter.com/)
+- [react-social-login-buttons](https://github.com/MichalSzorad/react-social-login-buttons)
+- [react-toastify](https://fkhadra.github.io/react-toastify/introduction)
+- [sweetalert2](https://sweetalert2.github.io/)
+- [passport-twitch-js](https://github.com/Bioblaze/passport-twitch.js)
+- [nodemon](https://nodemon.io/)
+- [express-session](https://github.com/expressjs/session)
+- [connect-mongo](https://github.com/jdesboeufs/connect-mongo)
+- [cors](https://github.com/expressjs/cors)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-### Analyzing the Bundle Size
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+# Setup
 
-### Making a Progressive Web App
+To run this project, install it locally using npm:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```
+$ git clone
+$ npm i
+$ npm start
 
-### Advanced Configuration
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
 
-### Deployment
+## Contributors
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
 
-### `npm run build` fails to minify
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+[Shoreasg](https://github.com/Shoreasg) 
+
